@@ -1,0 +1,61 @@
+﻿@page "/CreatePost"
+@using Microsoft.AspNetCore.Components
+@using Entities.Models
+
+
+<div class="box">
+    <h3>CreatePost</h3>
+    
+    <EditForm Model="@newPost" OnValidSubmit="@CreateNewPost">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="form-group field">
+                <span>
+                    <label>Header:</label>
+                </span>
+                <span>
+                    <InputText @bind-Value="newPost.Header"/>
+                </span>
+            </div>
+            <div class="form-group field">
+                <span>
+                    <label>Body:</label>
+                </span>
+                <span>
+                    <InputTextArea rows="4" @bind-Value="newPost.Body"/>
+                </span>
+            </div>
+            <p class="actions">
+                <button class="acceptbtn" type="submit">Create</button>
+            </p>
+        </EditForm>
+    
+    
+    @if(!string.IsNullOrEmpty(errorLabel)) {
+        <label>@errorLabel</label>
+    }
+
+</div>
+
+@code {
+    
+    private Post newPost = new Post();
+    private string errorLabel = String.Empty;
+    
+    
+    private async Task CreateNewPost()
+    {
+        errorLabel = "";
+        try
+        {
+            Console.WriteLine(newPost.Header);
+            newPost = new Post();
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+        }
+        
+    }
+    
+}

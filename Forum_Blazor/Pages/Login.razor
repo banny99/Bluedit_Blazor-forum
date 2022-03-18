@@ -1,0 +1,20 @@
+﻿@page "/Login"
+
+@inject NavigationManager navMgr
+
+<h3>Login</h3>
+
+<p>
+    Does NOT have an account? Register.
+</p>
+<button @onclick="Register">Register</button>
+
+
+
+@code {
+
+    private void Register()
+    {
+        navMgr.NavigateTo("/Register");
+    }
+}

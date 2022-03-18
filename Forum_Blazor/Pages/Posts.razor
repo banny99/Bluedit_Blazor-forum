@@ -1,0 +1,72 @@
+﻿@page "/Posts"
+@using Entities.Models
+@using Entities.Interfaces
+
+@inject IPostDAO PostDao
+@inject NavigationManager NavMgr
+
+<h3>Posts</h3>
+
+<button @onclick="CreatePost">Create Post</button>
+
+@if (allPosts == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!allPosts.Any())
+{
+    <p>
+        <em>No posts items exist. Please add some.</em>
+    </p>
+}
+else if (!postsToShow.Any())
+{
+    <p>
+        <em>No posts matching your search criteria</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Author</th>
+            <th>Header</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in postsToShow)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Author</td>
+                <td>@item.Header</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@if (!string.IsNullOrEmpty(errorLabel))
+{
+    <label style="color: red">@errorLabel</label>
+}
+
+@code {
+    private ICollection<Post> allPosts, postsToShow;
+    private string errorLabel;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        allPosts = await PostDao.GetAsync();
+        postsToShow = allPosts;
+    }
+
+    public void CreatePost()
+    {
+        NavMgr.NavigateTo("/CreatePost");
+    }
+}

@@ -1,0 +1,62 @@
+﻿@page "/Register"
+@using Entities.Models
+
+@inject NavigationManager navMgr
+
+
+
+<div class="box">
+    <h3>Register</h3>
+    
+    <EditForm Model="@newUser" OnValidSubmit="@RegisterUser">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="form-group field">
+                <span>
+                    <label>Username:</label>
+                </span>
+                <span>
+                    <InputText @bind-Value="newUser.UserName"/>
+                </span>
+            </div>
+            <div class="form-group field">
+                <span>
+                    <label>Password:</label>
+                </span>
+                <span>
+                    <InputText rows="4" @bind-Value="newUser.Password"/>
+                </span>
+            </div>
+            <p class="actions">
+                <button class="acceptbtn" type="submit">Create</button>
+            </p>
+        </EditForm>
+    
+    
+    @if(!string.IsNullOrEmpty(errorLabel)) {
+        <label>@errorLabel</label>
+    }
+
+</div>
+
+
+@code {
+    private User newUser = new User();
+    private string errorLabel = String.Empty;
+    
+    private async Task RegisterUser()
+    {
+        errorLabel = "";
+        try
+        {
+            Console.WriteLine(newUser.UserName);
+            //navMgr.NavigateTo("/Login");
+            newUser = new User();
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+        }
+        
+    }
+}
