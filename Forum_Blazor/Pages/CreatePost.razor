@@ -2,9 +2,11 @@
 @using Microsoft.AspNetCore.Components
 @using Entities.Models
 @using Entities.Interfaces
+@using Forum_Blazor.Authentication
 @using UIElements
 
 @inject IPostDAO PostDao
+@inject IAuthService authService
 @inject NavigationManager NavMgr
 
 
@@ -14,6 +16,7 @@
     <EditForm Model="@newPost" OnValidSubmit="@CreateNewPost">
             <DataAnnotationsValidator/>
             <ValidationSummary/>
+           
             <div class="form-group field">
                 <span>
                     <label>Header:</label>
@@ -77,6 +80,7 @@
 
     private async void Submit()
     {
+        newPost.Author = authService.GetLoggedUser();
         await PostDao.AddAsync(newPost);
         newPost = new Post();
         showModal = false;

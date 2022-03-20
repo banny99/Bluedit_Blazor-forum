@@ -17,22 +17,40 @@
   ],
   "Posts": [
     {
-      "Id": 0,
-      "Author": null,
-      "Header": "header1",
-      "Body": "body1 ....."
+      "Id": 4,
+      "Author": {
+        "UserName": "Monica",
+        "Password": "pass123",
+        "Role": "none",
+        "SecurityLevel": 0,
+        "BirthYear": 0
+      },
+      "Header": "asdfg",
+      "Body": "sdfgsdfgsdfg"
     },
     {
-      "Id": 1,
-      "Author": null,
-      "Header": "header2",
-      "Body": "asdfasdf sad asd fd sdf .."
+      "Id": 5,
+      "Author": {
+        "UserName": "Monica",
+        "Password": "pass123",
+        "Role": "none",
+        "SecurityLevel": 0,
+        "BirthYear": 0
+      },
+      "Header": "sfgsdfg",
+      "Body": "sdfgsdfgsdfg"
     },
     {
-      "Id": 2,
-      "Author": null,
-      "Header": "post 3 ",
-      "Body": "ASDFs ds\n\ns ds dsd sad d\nasd asd"
+      "Id": 6,
+      "Author": {
+        "UserName": "Ben",
+        "Password": "pass",
+        "Role": "none",
+        "SecurityLevel": 0,
+        "BirthYear": 0
+      },
+      "Header": "dsfgsdfgsdfg",
+      "Body": "sdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss"
     }
   ]
 }

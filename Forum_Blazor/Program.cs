@@ -2,9 +2,8 @@ using Entities.Interfaces;
 using Entities.Interfaces.Impls;
 using Forum_Blazor.Authentication;
 using JsonDataAccess.Context;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

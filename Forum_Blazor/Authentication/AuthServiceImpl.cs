@@ -10,9 +10,16 @@ namespace Forum_Blazor.Authentication
     {
 
         public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
+
+        public User GetLoggedUser()
+        {
+            return LoggedUser;
+        }
+
         // private readonly IUserService userService;
         private IUserDAO UserDao;
         private readonly IJSRuntime jsRuntime;
+        private User LoggedUser { get; set; }
         private ClaimsPrincipal principal;
 
         public AuthServiceImpl(IUserDAO userDao, IJSRuntime jsRuntime)
@@ -25,13 +32,13 @@ namespace Forum_Blazor.Authentication
         public async Task LoginAsync(string username, string password)
         {
             // User? user = await userService.GetUserAsync(username);
-            User? user = await UserDao.GetByUsername(username);
+            LoggedUser = await UserDao.GetByUsername(username);
 
-            ValidateLoginCredentials(password, user);
+            ValidateLoginCredentials(password, LoggedUser);
 
-            await CacheUserAsync(user);
+            await CacheUserAsync(LoggedUser);
 
-            principal = CreateClaimsPrincipal(user);
+            principal = CreateClaimsPrincipal(LoggedUser);
 
             OnAuthStateChanged?.Invoke(principal);
         }
