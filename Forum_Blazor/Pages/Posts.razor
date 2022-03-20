@@ -7,53 +7,71 @@
 
 <h3>Posts</h3>
 
-<button @onclick="CreatePost">Create Post</button>
+<AuthorizeView>
+    
+    <Authorized>
+        <button @onclick="CreatePost">Create Post</button>
+    </Authorized>
 
-@if (allPosts == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else if (!allPosts.Any())
-{
-    <p>
-        <em>No posts items exist. Please add some.</em>
-    </p>
-}
-else if (!postsToShow.Any())
-{
-    <p>
-        <em>No posts matching your search criteria</em>
-    </p>
-}
-else
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Post-ID</th>
-            <th>Author</th>
-            <th>Header</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var item in postsToShow)
+    <NotAuthorized>
+        <div>
+            <p>Log-in first, to create a Post!</p>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+ @if (allPosts == null)
         {
-            <tr @onclick="@(()=>ShowPost(item.Id))">
-                <td>@item.Id</td>
-                <td>@item.Author</td>
-                <td>@item.Header</td>
-            </tr>
+            <p>
+                <em>Loading...</em>
+            </p>
         }
-        </tbody>
-    </table>
-}
+        
+ else if (!allPosts.Any())
+        {
+            <p>
+                <em>No posts items exist. Please add some.</em>
+            </p>
+        }
 
-@if (!string.IsNullOrEmpty(errorLabel))
-{
-    <label style="color: red">@errorLabel</label>
-}
+ else if (!postsToShow.Any())
+        {
+            <p>
+                <em>No posts matching your search criteria</em>
+            </p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Post-ID</th>
+                    <th>Author</th>
+                    <th>Header</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in postsToShow)
+                {
+                    <tr @onclick="@(() => ShowPost(item.Id))">
+                        <td>@item.Id</td>
+                        <td>@item.Author</td>
+                        <td>@item.Header</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+        @if (!string.IsNullOrEmpty(errorLabel))
+        {
+            <label style="color: red">@errorLabel</label>
+        }
+
+
+
+
 
 @code {
     private ICollection<Post> allPosts, postsToShow;

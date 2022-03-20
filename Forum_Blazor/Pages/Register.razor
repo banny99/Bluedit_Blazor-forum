@@ -1,8 +1,9 @@
 ﻿@page "/Register"
 @using Entities.Models
+@using Entities.Interfaces
 
 @inject NavigationManager navMgr
-
+@inject IUserDAO UserDao
 
 
 <div class="box">
@@ -49,8 +50,10 @@
         errorLabel = "";
         try
         {
-            Console.WriteLine(newUser.UserName);
-            //navMgr.NavigateTo("/Login");
+            newUser.Role = "none";
+            
+            await UserDao.AddAsync(newUser);
+            navMgr.NavigateTo("/Login");
             newUser = new User();
         }
         catch (Exception e)

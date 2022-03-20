@@ -1,5 +1,20 @@
 {
-  "Users": [],
+  "Users": [
+    {
+      "UserName": "Ben",
+      "Password": "pass",
+      "Role": "none",
+      "SecurityLevel": 0,
+      "BirthYear": 0
+    },
+    {
+      "UserName": "Monica",
+      "Password": "pass123",
+      "Role": "none",
+      "SecurityLevel": 0,
+      "BirthYear": 0
+    }
+  ],
   "Posts": [
     {
       "Id": 0,

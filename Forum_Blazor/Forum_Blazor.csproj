@@ -11,4 +11,9 @@
       <ProjectReference Include="..\FileData\FileData.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\img\Login.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\img\Logout.png" />
+    </ItemGroup>
+
 </Project>
