@@ -4,9 +4,14 @@ public class Forum
 {
     // Add e.g. ICollection<Post> or ICollection<SubForum> or similar.
     public ICollection<User> Users { get; set; }
-    
-    public ICollection<Post> Posts;
-    
+    public ICollection<Post> Posts { get; set; }
+
+    public Forum()
+    {
+        Users = new List<User>();
+        Posts = new List<Post>();
+    }
+
     private ICollection<Post> Seed()
     {
         Post[] ps =

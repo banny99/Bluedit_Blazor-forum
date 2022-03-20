@@ -1,11 +1,17 @@
-﻿namespace Entities.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities.Models;
 
 public class Post
 {
     
     public int Id { get; set; }
     public User Author { get; set; }
+    
+    [Required (ErrorMessage = "Header is required!")]
     public string Header { get; set; }
+    
+    [Required (ErrorMessage = "Body cannot be empty!")]
     public string Body { get; set; }
     
     

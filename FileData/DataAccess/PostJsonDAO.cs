@@ -31,7 +31,12 @@ public class PostJsonDao : IPostDAO
 
     public async Task<Post> AddAsync(Post post)
     {
-        int largestId = _jsonContext.Forum.Posts.Max(p => p.Id);
+        int largestId = -1;
+        if (_jsonContext.Forum.Posts.Any())
+        {
+            largestId = _jsonContext.Forum.Posts.Max(p => p.Id);
+        }
+        
         int nextId = largestId + 1;
         post.Id = nextId;
         _jsonContext.Forum.Posts.Add(post);

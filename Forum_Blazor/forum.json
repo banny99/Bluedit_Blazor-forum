@@ -1,3 +1,17 @@
 {
-  "Users": null
+  "Users": [],
+  "Posts": [
+    {
+      "Id": 0,
+      "Author": null,
+      "Header": "header1",
+      "Body": "body1 ....."
+    },
+    {
+      "Id": 1,
+      "Author": null,
+      "Header": "header2",
+      "Body": "asdfasdf sad asd fd sdf .."
+    }
+  ]
 }

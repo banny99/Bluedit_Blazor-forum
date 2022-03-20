@@ -32,9 +32,11 @@ else
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>Post-ID</th>
             <th>Author</th>
             <th>Header</th>
+            <th>Edit</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +46,20 @@ else
                 <td>@item.Id</td>
                 <td>@item.Author</td>
                 <td>@item.Header</td>
+                <td>
+                    <label
+                        @onclick="@(() => EditPost(item.Id))"
+                        style="cursor:pointer; color: blue; font-weight: bold">
+                        Edit
+                    </label>
+                </td>
+                <td>
+                    <label
+                        @onclick="@(() => RemovePost(item.Id))"
+                        style="cursor:pointer; color: red; font-weight: bold">
+                        &#x2717;
+                    </label>
+                </td>
             </tr>
         }
         </tbody>
@@ -69,4 +85,15 @@ else
     {
         NavMgr.NavigateTo("/CreatePost");
     }
+
+    private void RemovePost(int itemId)
+    {
+        Console.WriteLine($"Post-id to remove {itemId}");
+    }
+
+    private void EditPost(int itemId)
+    {
+        Console.WriteLine($"Post-id to edit {itemId}");
+    }
+
 }

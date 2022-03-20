@@ -1,6 +1,11 @@
 ﻿@page "/CreatePost"
 @using Microsoft.AspNetCore.Components
 @using Entities.Models
+@using Entities.Interfaces
+@using UIElements
+
+@inject IPostDAO PostDao
+@inject NavigationManager NavMgr
 
 
 <div class="box">
@@ -31,10 +36,22 @@
         </EditForm>
     
     
-    @if(!string.IsNullOrEmpty(errorLabel)) {
+    @if(!string.IsNullOrEmpty(errorLabel))
+    {
         <label>@errorLabel</label>
     }
-
+    
+    @if (showModal)
+    {
+        <Modal>
+            <p>Do you really wish to add a new Post?</p>
+            <button @onclick="@Submit">Create</button>
+            <button @onclick="@Edit">Edit</button>
+            <button @onclick="@Cancel">Cancel</button>
+        </Modal>
+    }
+    
+    
 </div>
 
 @code {
@@ -42,20 +59,40 @@
     private Post newPost = new Post();
     private string errorLabel = String.Empty;
     
+    private bool showModal;
     
     private async Task CreateNewPost()
     {
         errorLabel = "";
         try
         {
-            Console.WriteLine(newPost.Header);
-            newPost = new Post();
+            showModal = true;
         }
         catch (Exception e)
         {
             errorLabel = e.Message;
         }
-        
     }
     
+
+    private async void Submit()
+    {
+        await PostDao.AddAsync(newPost);
+        newPost = new Post();
+        showModal = false;
+        NavMgr.NavigateTo("/Posts");
+    }
+
+    private void Edit()
+    {
+        showModal = false;
+    }
+
+    private void Cancel()
+    {
+        newPost = new Post();
+        showModal = false;
+        NavMgr.NavigateTo("/Posts");
+    }
+
 }
