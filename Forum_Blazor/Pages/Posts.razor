@@ -35,31 +35,15 @@ else
             <th>Post-ID</th>
             <th>Author</th>
             <th>Header</th>
-            <th>Edit</th>
-            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
         @foreach (var item in postsToShow)
         {
-            <tr>
+            <tr @onclick="@(()=>ShowPost(item.Id))">
                 <td>@item.Id</td>
                 <td>@item.Author</td>
                 <td>@item.Header</td>
-                <td>
-                    <label
-                        @onclick="@(() => EditPost(item.Id))"
-                        style="cursor:pointer; color: blue; font-weight: bold">
-                        Edit
-                    </label>
-                </td>
-                <td>
-                    <label
-                        @onclick="@(() => RemovePost(item.Id))"
-                        style="cursor:pointer; color: red; font-weight: bold">
-                        &#x2717;
-                    </label>
-                </td>
             </tr>
         }
         </tbody>
@@ -94,6 +78,12 @@ else
     private void EditPost(int itemId)
     {
         Console.WriteLine($"Post-id to edit {itemId}");
+    }
+
+
+    private void ShowPost(int itemId)
+    {
+        NavMgr.NavigateTo($"/ShowPost/{itemId}");
     }
 
 }

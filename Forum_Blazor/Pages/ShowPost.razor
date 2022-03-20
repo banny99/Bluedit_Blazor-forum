@@ -1,0 +1,46 @@
+﻿@page "/ShowPost/{Id:int}"
+@using Entities.Models
+@using Entities.Interfaces
+
+@inject IPostDAO PostDao
+@inject NavigationManager NavMgr
+
+<div class="box">
+    
+    @if (!string.IsNullOrEmpty(errorLabel))
+    {
+        <label>@errorLabel</label>
+    }
+
+    else
+    {
+        <h3>@_shownPost.Header</h3>
+        <h5>Author: @_shownPost.Author</h5>
+        <p>
+            @_shownPost.Body
+        </p>
+    }
+    
+</div>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Post _shownPost;
+    private string errorLabel = String.Empty;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _shownPost = await PostDao.GetById(Id);
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+        }
+        
+    }
+}
