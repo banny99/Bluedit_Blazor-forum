@@ -2,8 +2,11 @@
 @using Entities.Models
 @using Entities.Interfaces
 
-@inject IPostDAO PostDao
-@inject NavigationManager NavMgr
+@inject IPostDao _postDao
+@inject NavigationManager _navMgr
+
+
+<PageTitle>Posts</PageTitle>
 
 <h3>Posts</h3>
 
@@ -79,13 +82,13 @@
     
     protected override async Task OnInitializedAsync()
     {
-        allPosts = await PostDao.GetAsync();
+        allPosts = await _postDao.GetAsync();
         postsToShow = allPosts;
     }
 
     public void CreatePost()
     {
-        NavMgr.NavigateTo("/CreatePost");
+        _navMgr.NavigateTo("/CreatePost");
     }
 
     private void RemovePost(int itemId)
@@ -101,7 +104,7 @@
 
     private void ShowPost(int itemId)
     {
-        NavMgr.NavigateTo($"/ShowPost/{itemId}");
+        _navMgr.NavigateTo($"/ShowPost/{itemId}");
     }
 
 }

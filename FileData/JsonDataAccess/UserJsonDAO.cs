@@ -1,9 +1,10 @@
 ﻿using Entities.Interfaces;
 using Entities.Models;
+using FileData.JsonDataAccess;
 
 namespace JsonDataAccess.Context;
 
-public class UserJsonDAO : IUserDAO
+public class UserJsonDAO : IUserDao
 {
     
     private JsonContext _jsonContext;

@@ -2,14 +2,17 @@
 @using Entities.Models
 @using Entities.Interfaces
 
-@inject IPostDAO PostDao
-@inject NavigationManager NavMgr
+@inject IPostDao _postDao
+@inject NavigationManager _navMgr
+
+
+<PageTitle>Post : @_shownPost</PageTitle>
 
 <div class="box">
     
-    @if (!string.IsNullOrEmpty(errorLabel))
+    @if (!string.IsNullOrEmpty(_errorLabel))
     {
-        <label>@errorLabel</label>
+        <label>@_errorLabel</label>
     }
 
     else
@@ -28,18 +31,18 @@
     [Parameter]
     public int Id { get; set; }
 
-    private Post _shownPost;
-    private string errorLabel = String.Empty;
+    private Post _shownPost = null!;
+    private string _errorLabel = String.Empty;
     
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            _shownPost = await PostDao.GetById(Id);
+            _shownPost = await _postDao.GetById(Id);
         }
         catch (Exception e)
         {
-            errorLabel = e.Message;
+            _errorLabel = e.Message;
         }
         
     }

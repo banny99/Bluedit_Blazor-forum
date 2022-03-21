@@ -2,7 +2,7 @@
 
 namespace Entities.Interfaces;
 
-public interface IPostDAO
+public interface IPostDao
 {
     public Task<ICollection<Post>> GetAsync();
     public Task<Post> GetById(int id);

@@ -1,9 +1,33 @@
 @page "/"
+@inject NavigationManager _navMgr
+
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<p>
+    - Welcome to the 'BlueDit Forum' -
+</p>
 
-<SurveyPrompt Title="How is Blazor working for you?"/>
+<br/>
+
+<p>
+    <span @onclick="ToLogin" style="cursor: pointer">Log in</span> 
+    to add posts or just go and check the posts in the 
+    <span @onclick="ToPosts" style="cursor: pointer; color: #0a53be">'Posts' tab</span>.
+</p>
+
+@code
+{
+
+    private void ToLogin()
+    {
+        _navMgr.NavigateTo("/Login");
+    }
+
+    private void ToPosts()
+    {
+        _navMgr.NavigateTo("/Posts");
+    }
+}

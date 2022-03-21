@@ -1,30 +1,30 @@
 ﻿using System.Text.Json;
 using Entities.Models;
 
-namespace JsonDataAccess.Context;
+namespace FileData.JsonDataAccess;
 
 public class JsonContext
 {
-    private string forumPath = "forum.json";
+    private const string ForumPath = "forum.json";
 
-    private Forum? forum;
+    private Forum? _forum;
     public Forum Forum
     {
         get
         {
-            if (forum == null)
+            if (_forum == null)
             {
                 LoadData();
             }
 
-            return forum!;
+            return _forum!;
         }
         private set{}
     }
 
     public JsonContext()
     {
-        if (File.Exists(forumPath))
+        if (File.Exists(ForumPath))
         {
             LoadData();
         }
@@ -36,24 +36,24 @@ public class JsonContext
 
     private void CreateFile()
     {
-        forum = new Forum();
+        _forum = new Forum();
         Task.FromResult(SaveChangesAsync());
     }
 
     private void LoadData()
     {
-        string forumAsJson = File.ReadAllText(forumPath);
-        forum = JsonSerializer.Deserialize<Forum>(forumAsJson)!;
+        string forumAsJson = File.ReadAllText(ForumPath);
+        _forum = JsonSerializer.Deserialize<Forum>(forumAsJson)!;
     }
 
     public async Task SaveChangesAsync()
     {
-        string forumAsJson = JsonSerializer.Serialize(forum, new JsonSerializerOptions
+        string forumAsJson = JsonSerializer.Serialize(_forum, new JsonSerializerOptions
         {
             WriteIndented = true,
             PropertyNameCaseInsensitive = false
         });
-        await File.WriteAllTextAsync(forumPath,forumAsJson);
-        forum = null;
+        await File.WriteAllTextAsync(ForumPath,forumAsJson);
+        _forum = null;
 	}
 }

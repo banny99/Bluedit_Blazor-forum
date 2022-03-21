@@ -17,12 +17,12 @@ namespace Forum_Blazor.Authentication
         }
 
         // private readonly IUserService userService;
-        private IUserDAO UserDao;
+        private IUserDao UserDao;
         private readonly IJSRuntime jsRuntime;
         private User LoggedUser { get; set; }
         private ClaimsPrincipal principal;
 
-        public AuthServiceImpl(IUserDAO userDao, IJSRuntime jsRuntime)
+        public AuthServiceImpl(IUserDao userDao, IJSRuntime jsRuntime)
         {
             // this.userService = userService;
             UserDao = userDao;

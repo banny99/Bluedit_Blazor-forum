@@ -2,11 +2,14 @@
 @using Forum_Blazor.Authentication
 @using Entities.Interfaces
 
-@inject IAuthService authService
-@inject NavigationManager navMgr
-@inject IUserDAO UserDao
+@inject IAuthService _authService
+@inject NavigationManager _navMgr
+@inject IUserDao _userDao
 
-<h3>Login</h3>
+
+<PageTitle>Log-in</PageTitle>
+
+<h3>Log-in</h3>
 
 <AuthorizeView>
     <NotAuthorized>
@@ -14,17 +17,17 @@
             <h3>Please login</h3>
             <div class="field">
                 <label>User name:</label>
-                <input type="text" @bind="userName"/>
+                <input type="text" @bind="_userName"/>
             </div>
             <div class="field">
                 <label style="text-align: center">Password:</label>
-                <input type="password" @bind="password"/>
+                <input type="password" @bind="_password"/>
             </div>
-            @if (!string.IsNullOrEmpty(errorLabel))
+            @if (!string.IsNullOrEmpty(_errorLabel))
             {
                 <div class="field">
                     <label style="color: red">
-                        @errorLabel
+                        @_errorLabel
                     </label>
                 </div>
             }
@@ -44,7 +47,7 @@
     
     <Authorized>
         <div class="card">
-            <h3>Hello, @context.User.Identity.Name</h3>
+            <h3>Hello, @context.User.Identity!.Name</h3>
         </div>
     </Authorized>
     
@@ -54,26 +57,26 @@
 
 @code {
     
-    private string userName;
-    private string password;
-    private string errorLabel;
+    private string _userName;
+    private string _password;
+    private string _errorLabel;
 
     private async Task LoginAsync()
     {
-        errorLabel = "";
+        _errorLabel = "";
         try
         {
-            await authService.LoginAsync(userName, password);
-            navMgr.NavigateTo("/Posts");
+            await _authService.LoginAsync(_userName, _password);
+            _navMgr.NavigateTo("/Posts");
         }
         catch (Exception e)
         {
-            errorLabel = $"Error: {e.Message}";
+            _errorLabel = $"Error: {e.Message}";
         }
     }
 
     private void Register()
     {
-        navMgr.NavigateTo("/Register");
+        _navMgr.NavigateTo("/Register");
     }
 }

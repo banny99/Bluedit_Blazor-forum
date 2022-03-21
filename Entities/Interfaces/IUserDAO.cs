@@ -2,7 +2,7 @@
 
 namespace Entities.Interfaces;
 
-public interface IUserDAO
+public interface IUserDao
 {
     public Task<ICollection<User>> GetAsync();
     public Task<User> GetById(int id);

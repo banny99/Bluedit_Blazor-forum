@@ -2,18 +2,18 @@
 @using Microsoft.AspNetCore.Components
 @using Entities.Models
 @using Entities.Interfaces
-@using Forum_Blazor.Authentication
+@using Authentication
 @using UIElements
 
-@inject IPostDAO PostDao
-@inject IAuthService authService
-@inject NavigationManager NavMgr
+@inject IPostDao _postDao
+@inject IAuthService _authService
+@inject NavigationManager _navMgr
 
 
 <div class="box">
     <h3>CreatePost</h3>
     
-    <EditForm Model="@newPost" OnValidSubmit="@CreateNewPost">
+    <EditForm Model="@_newPost" OnValidSubmit="@CreateNewPost">
             <DataAnnotationsValidator/>
             <ValidationSummary/>
            
@@ -22,7 +22,7 @@
                     <label>Header:</label>
                 </span>
                 <span>
-                    <InputText @bind-Value="newPost.Header"/>
+                    <InputText @bind-Value="_newPost.Header"/>
                 </span>
             </div>
             <div class="form-group field">
@@ -30,7 +30,7 @@
                     <label>Body:</label>
                 </span>
                 <span>
-                    <InputTextArea rows="4" @bind-Value="newPost.Body"/>
+                    <InputTextArea rows="4" @bind-Value="_newPost.Body"/>
                 </span>
             </div>
             <p class="actions">
@@ -39,12 +39,12 @@
         </EditForm>
     
     
-    @if(!string.IsNullOrEmpty(errorLabel))
+    @if(!string.IsNullOrEmpty(_errorLabel))
     {
-        <label>@errorLabel</label>
+        <label>@_errorLabel</label>
     }
     
-    @if (showModal)
+    @if (_showModal)
     {
         <Modal>
             <p>Do you really wish to add a new Post?</p>
@@ -59,44 +59,44 @@
 
 @code {
     
-    private Post newPost = new Post();
-    private string errorLabel = String.Empty;
+    private Post _newPost = new Post();
+    private string _errorLabel = String.Empty;
     
-    private bool showModal;
+    private bool _showModal;
     
     private async Task CreateNewPost()
     {
-        errorLabel = "";
+        _errorLabel = "";
         try
         {
-            showModal = true;
+            _showModal = true;
         }
         catch (Exception e)
         {
-            errorLabel = e.Message;
+            _errorLabel = e.Message;
         }
     }
     
 
     private async void Submit()
     {
-        newPost.Author = authService.GetLoggedUser();
-        await PostDao.AddAsync(newPost);
-        newPost = new Post();
-        showModal = false;
-        NavMgr.NavigateTo("/Posts");
+        _newPost.Author = _authService.GetLoggedUser();
+        await _postDao.AddAsync(_newPost);
+        _newPost = new Post();
+        _showModal = false;
+        _navMgr.NavigateTo("/Posts");
     }
 
     private void Edit()
     {
-        showModal = false;
+        _showModal = false;
     }
 
     private void Cancel()
     {
-        newPost = new Post();
-        showModal = false;
-        NavMgr.NavigateTo("/Posts");
+        _newPost = new Post();
+        _showModal = false;
+        _navMgr.NavigateTo("/Posts");
     }
 
 }

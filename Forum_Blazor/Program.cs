@@ -1,5 +1,5 @@
 using Entities.Interfaces;
-using Entities.Interfaces.Impls;
+using FileData.JsonDataAccess;
 using Forum_Blazor.Authentication;
 using JsonDataAccess.Context;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -13,13 +13,13 @@ builder.Services.AddServerSideBlazor();
 
 //serialization services:
 builder.Services.AddScoped<JsonContext>();
-builder.Services.AddScoped<IPostDAO, PostJsonDao>();
-builder.Services.AddScoped<IUserDAO, UserJsonDAO>();
+builder.Services.AddScoped<IPostDao, PostJsonDao>();
+builder.Services.AddScoped<IUserDao, UserJsonDAO>();
 
 //log in/out services:
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
-builder.Services.AddScoped<IUserService, InMemoryUserService>();
+// builder.Services.AddScoped<IUserService, InMemoryUserService>();
 
 var app = builder.Build();
 

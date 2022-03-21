@@ -14,6 +14,10 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\img\Login.png" />
       <_ContentIncludedByDefault Remove="wwwroot\img\Logout.png" />
+      <_ContentIncludedByDefault Remove="Pages\UIElements\LoginButtons.razor" />
+      <_ContentIncludedByDefault Remove="Pages\UIElements\Modal.razor" />
+      <_ContentIncludedByDefault Remove="UIElements\LoginButtons.razor" />
+      <_ContentIncludedByDefault Remove="UIElements\Modal.razor" />
     </ItemGroup>
 
 </Project>
