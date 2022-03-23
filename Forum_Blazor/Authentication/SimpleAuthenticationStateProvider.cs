@@ -6,17 +6,17 @@ namespace Forum_Blazor.Authentication;
 public class SimpleAuthenticationStateProvider : AuthenticationStateProvider
 {
     
-    private readonly IAuthService authService;
+    private readonly IAuthService _authService;
 
     public SimpleAuthenticationStateProvider(IAuthService authService)
     {
-        this.authService = authService;
+        _authService = authService;
         authService.OnAuthStateChanged += AuthStateChanged;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        ClaimsPrincipal principal = await authService.GetAuthAsync();
+        ClaimsPrincipal principal = await _authService.GetAuthAsync();
         return await Task.FromResult(new AuthenticationState(principal));
     }
 

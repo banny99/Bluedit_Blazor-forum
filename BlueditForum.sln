@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileData", "FileData\FileDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forum_Blazor", "Forum_Blazor\Forum_Blazor.csproj", "{B7A18049-AE5A-4BAA-8144-2BF162836278}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{3EB61414-19B0-4CE5-8235-F0D64BBE28FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{2E11674D-3A47-47A4-94CF-0BCBC45132F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{B7A18049-AE5A-4BAA-8144-2BF162836278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7A18049-AE5A-4BAA-8144-2BF162836278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7A18049-AE5A-4BAA-8144-2BF162836278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EB61414-19B0-4CE5-8235-F0D64BBE28FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EB61414-19B0-4CE5-8235-F0D64BBE28FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EB61414-19B0-4CE5-8235-F0D64BBE28FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EB61414-19B0-4CE5-8235-F0D64BBE28FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E11674D-3A47-47A4-94CF-0BCBC45132F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E11674D-3A47-47A4-94CF-0BCBC45132F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E11674D-3A47-47A4-94CF-0BCBC45132F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E11674D-3A47-47A4-94CF-0BCBC45132F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

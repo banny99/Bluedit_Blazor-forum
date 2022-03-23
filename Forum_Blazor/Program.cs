@@ -1,3 +1,5 @@
+using Application.Logic;
+using Contracts.Services;
 using Entities.Interfaces;
 using FileData.JsonDataAccess;
 using Forum_Blazor.Authentication;
@@ -13,6 +15,8 @@ builder.Services.AddServerSideBlazor();
 
 //serialization services:
 builder.Services.AddScoped<JsonContext>();
+builder.Services.AddScoped<IPostService, PostServiceImpl>();
+builder.Services.AddScoped<IUserService, UserServiceImpl>();
 builder.Services.AddScoped<IPostDao, PostJsonDao>();
 builder.Services.AddScoped<IUserDao, UserJsonDAO>();
 

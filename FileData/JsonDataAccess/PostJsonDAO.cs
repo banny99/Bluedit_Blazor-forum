@@ -45,17 +45,19 @@ public class PostJsonDao : IPostDao
         return post;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<Post> DeleteAsync(int id)
     {
         Post toDelete = _jsonContext.Forum.Posts.First(p => p.Id == id);
         _jsonContext.Forum.Posts.Remove(toDelete);
         await _jsonContext.SaveChangesAsync();
+        return toDelete;
     }
 
-    public async Task UpdateAsync(Post post)
+    public async Task<Post> UpdateAsync(Post post)
     {
         Post toUpdate = _jsonContext.Forum.Posts.First(p => p.Id == post.Id);
         toUpdate.Update(post);
         await _jsonContext.SaveChangesAsync();
+        return toUpdate;
     }
 }

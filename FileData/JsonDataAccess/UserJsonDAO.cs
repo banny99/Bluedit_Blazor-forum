@@ -28,22 +28,26 @@ public class UserJsonDAO : IUserDao
         return Task.FromResult(_jsonContext.Forum.Users.First(u => u.UserName.Equals(username)));
     }
 
-    public async Task AddAsync(User u)
+    public async Task<User> AddAsync(User u)
     {
         _jsonContext.Forum.Users.Add(u);
         await _jsonContext.SaveChangesAsync();
+        return u;
     }
 
-    public async Task DeleteAsync(string username)
+    public async Task<User> DeleteAsync(string username)
     {
-        _jsonContext.Forum.Users.Remove(_jsonContext.Forum.Users.First(u => u.UserName.Equals(username)));
+        User userToRemove = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
+        _jsonContext.Forum.Users.Remove(userToRemove);
         await _jsonContext.SaveChangesAsync();
+        return userToRemove;
     }
 
-    public async Task UpdateAsync(User user)
+    public async Task<User> UpdateAsync(User user)
     {
         User userToUpdate = _jsonContext.Forum.Users.First(u => u.Equals(user));
         userToUpdate.Password = user.Password;
         await _jsonContext.SaveChangesAsync();
+        return userToUpdate;
     }
 }

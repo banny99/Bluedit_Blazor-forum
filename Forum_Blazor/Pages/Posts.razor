@@ -1,8 +1,8 @@
 ﻿@page "/Posts"
 @using Entities.Models
-@using Entities.Interfaces
+@using Contracts.Services
 
-@inject IPostDao _postDao
+@inject IPostService _postService
 @inject NavigationManager _navMgr
 
 
@@ -24,21 +24,21 @@
 </AuthorizeView>
 
 
- @if (allPosts == null)
+ @if (_allPosts == null)
         {
             <p>
                 <em>Loading...</em>
             </p>
         }
         
- else if (!allPosts.Any())
+ else if (!_allPosts.Any())
         {
             <p>
                 <em>No posts items exist. Please add some.</em>
             </p>
         }
 
- else if (!postsToShow.Any())
+ else if (!_postsToShow.Any())
         {
             <p>
                 <em>No posts matching your search criteria</em>
@@ -55,7 +55,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach (var item in postsToShow)
+                @foreach (var item in _postsToShow)
                 {
                     <tr @onclick="@(() => ShowPost(item.Id))">
                         <td>@item.Id</td>
@@ -67,9 +67,9 @@
             </table>
         }
 
-        @if (!string.IsNullOrEmpty(errorLabel))
+        @if (!string.IsNullOrEmpty(_errorLabel))
         {
-            <label style="color: red">@errorLabel</label>
+            <label style="color: red">@_errorLabel</label>
         }
 
 
@@ -77,13 +77,13 @@
 
 
 @code {
-    private ICollection<Post> allPosts, postsToShow;
-    private string errorLabel;
+    private ICollection<Post> _allPosts, _postsToShow;
+    private string _errorLabel;
     
     protected override async Task OnInitializedAsync()
     {
-        allPosts = await _postDao.GetAsync();
-        postsToShow = allPosts;
+        _allPosts = await _postService.GetAsync();
+        _postsToShow = _allPosts;
     }
 
     public void CreatePost()

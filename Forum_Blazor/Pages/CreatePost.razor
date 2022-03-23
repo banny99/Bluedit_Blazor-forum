@@ -1,11 +1,11 @@
 ﻿@page "/CreatePost"
 @using Microsoft.AspNetCore.Components
 @using Entities.Models
-@using Entities.Interfaces
 @using Authentication
+@using Contracts.Services
 @using UIElements
 
-@inject IPostDao _postDao
+@inject IPostService _postService
 @inject IAuthService _authService
 @inject NavigationManager _navMgr
 
@@ -81,7 +81,7 @@
     private async void Submit()
     {
         _newPost.Author = _authService.GetLoggedUser();
-        await _postDao.AddAsync(_newPost);
+        await _postService.AddAsync(_newPost);
         _newPost = new Post();
         _showModal = false;
         _navMgr.NavigateTo("/Posts");

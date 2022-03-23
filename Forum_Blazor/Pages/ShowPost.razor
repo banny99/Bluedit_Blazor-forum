@@ -1,8 +1,8 @@
 ﻿@page "/ShowPost/{Id:int}"
 @using Entities.Models
-@using Entities.Interfaces
+@using Contracts.Services
 
-@inject IPostDao _postDao
+@inject IPostService _postService
 @inject NavigationManager _navMgr
 
 
@@ -38,7 +38,7 @@
     {
         try
         {
-            _shownPost = await _postDao.GetById(Id);
+            _shownPost = await _postService.GetById(Id);
         }
         catch (Exception e)
         {

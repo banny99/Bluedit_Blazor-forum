@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
-using Entities.Interfaces;
+using Contracts.Services;
 using Entities.Models;
 using Microsoft.JSInterop;
 
@@ -17,22 +17,21 @@ namespace Forum_Blazor.Authentication
         }
 
         // private readonly IUserService userService;
-        private IUserDao UserDao;
-        private readonly IJSRuntime jsRuntime;
+        private IUserService _userService;
+        private readonly IJSRuntime _jsRuntime;
         private User LoggedUser { get; set; }
         private ClaimsPrincipal principal;
 
-        public AuthServiceImpl(IUserDao userDao, IJSRuntime jsRuntime)
+        public AuthServiceImpl(IUserService userService, IJSRuntime jsRuntime)
         {
-            // this.userService = userService;
-            UserDao = userDao;
-            this.jsRuntime = jsRuntime;
+            _userService = userService;
+            _jsRuntime = jsRuntime;
         }
 
         public async Task LoginAsync(string username, string password)
         {
             // User? user = await userService.GetUserAsync(username);
-            LoggedUser = await UserDao.GetByUsername(username);
+            LoggedUser = await _userService.GetByUsername(username);
 
             ValidateLoginCredentials(password, LoggedUser);
 
@@ -47,7 +46,7 @@ namespace Forum_Blazor.Authentication
         {
             await ClearUserFromCacheAsync();
             principal = CreateClaimsPrincipal(null);
-            OnAuthStateChanged?.Invoke(principal);
+            OnAuthStateChanged.Invoke(principal);
         }
 
         public async Task<ClaimsPrincipal> GetAuthAsync()
@@ -57,7 +56,7 @@ namespace Forum_Blazor.Authentication
                 return principal;
             }
 
-            string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+            string userAsJson = await _jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
             if (string.IsNullOrEmpty(userAsJson))
             {
                 return new ClaimsPrincipal(new ClaimsIdentity());
@@ -65,7 +64,7 @@ namespace Forum_Blazor.Authentication
 
             User? user = JsonSerializer.Deserialize<User>(userAsJson);
             // user = await userService.GetUserAsync(user.UserName);
-            user = await UserDao.GetByUsername(user.UserName);
+            user = await _userService.GetByUsername(user.UserName);
             principal = CreateClaimsPrincipal(user);
             return principal;
         }
@@ -86,11 +85,11 @@ namespace Forum_Blazor.Authentication
         private async Task CacheUserAsync(User? user)
         {
             string serialisedData = JsonSerializer.Serialize(user);
-            await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
+            await _jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
         }
         private async Task<User?> GetUserFromCacheAsync()
         {
-            string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+            string userAsJson = await _jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
             if (string.IsNullOrEmpty(userAsJson)) return null;
             User user = JsonSerializer.Deserialize<User>(userAsJson)!;
             return user;
@@ -111,7 +110,7 @@ namespace Forum_Blazor.Authentication
 
         private async Task ClearUserFromCacheAsync()
         {
-            await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", "");
+            await _jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", "");
         }
 
         private ClaimsIdentity ConvertUserToClaimsIdentity(User user)
