@@ -15,8 +15,8 @@
       "BirthYear": 0
     },
     {
-      "UserName": "sdf",
-      "Password": "ddddd",
+      "UserName": "Monicaa",
+      "Password": "asSS12",
       "Role": "none",
       "SecurityLevel": 0,
       "BirthYear": 0
@@ -24,7 +24,7 @@
   ],
   "Posts": [
     {
-      "Id": 4,
+      "Id": 0,
       "Author": {
         "UserName": "Monica",
         "Password": "pass123",
@@ -32,68 +32,40 @@
         "SecurityLevel": 0,
         "BirthYear": 0
       },
-      "Header": "asdfg",
-      "Body": "sdfgsdfgsdfg"
-    },
-    {
-      "Id": 5,
-      "Author": {
-        "UserName": "Monica",
-        "Password": "pass123",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "sfgsdfg",
-      "Body": "sdfgsdfgsdfg"
-    },
-    {
-      "Id": 6,
-      "Author": {
-        "UserName": "Ben",
-        "Password": "pass",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "dsfgsdfgsdfg",
-      "Body": "sdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss\nsdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nsssssdfgsdfg sdf\nssss"
-    },
-    {
-      "Id": 7,
-      "Author": {
-        "UserName": "Monica",
-        "Password": "pass123",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "ddd",
-      "Body": "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
-    },
-    {
-      "Id": 8,
-      "Author": {
-        "UserName": "Monica",
-        "Password": "pass123",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "aSD",
-      "Body": "ADFSADSF"
-    },
-    {
-      "Id": 9,
-      "Author": {
-        "UserName": "Monica",
-        "Password": "pass123",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "DDDSFSAFSDFG SDFG ",
-      "Body": "DFGHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+      "Header": "h1",
+      "Body": "b1\nsad asd asd\nsssssssss\nas da sdsadasd",
+      "Comments": [
+        {
+          "WrittenBy": {
+            "UserName": "anonym",
+            "Password": null,
+            "Role": null,
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "asd"
+        },
+        {
+          "WrittenBy": {
+            "UserName": "Monica",
+            "Password": "pass123",
+            "Role": "none",
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "ppp"
+        },
+        {
+          "WrittenBy": {
+            "UserName": "anonym",
+            "Password": null,
+            "Role": null,
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "ml"
+        }
+      ]
     }
   ]
 }

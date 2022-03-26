@@ -4,7 +4,6 @@
 @using Contracts.Services
 
 @inject NavigationManager _navMgr
-@* @inject IUserDao _userDao *@
 @inject IUserService _userService
 
 <PageTitle>Register</PageTitle>
@@ -13,28 +12,28 @@
     <h3>Register</h3>
     
     <EditForm Model="@_newUser" OnValidSubmit="@RegisterUser">
-            <DataAnnotationsValidator/>
-            <ValidationSummary/>
-            <div class="form-group field">
-                <span>
-                    <label>Username:</label>
-                </span>
-                <span>
-                    <InputText @bind-Value="_newUser.UserName"/>
-                </span>
-            </div>
-            <div class="form-group field">
-                <span>
-                    <label>Password:</label>
-                </span>
-                <span>
-                    <InputText rows="4" @bind-Value="_newUser.Password"/>
-                </span>
-            </div>
-            <p class="actions">
-                <button class="acceptbtn" type="submit">Create</button>
-            </p>
-        </EditForm>
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+        <div class="form-group field">
+            <span>
+                <label>Username:</label>
+            </span>
+            <span>
+                <InputText @bind-Value="_newUser.UserName"/>
+            </span>
+        </div>
+        <div class="form-group field">
+            <span>
+                <label>Password:</label>
+            </span>
+            <span>
+                <InputText rows="4" @bind-Value="_newUser.Password"/>
+            </span>
+        </div>
+        <p class="actions">
+            <button class="acceptbtn" type="submit">Create</button>
+        </p>
+    </EditForm>
     
     
     @if(!string.IsNullOrEmpty(_errorLabel)) {

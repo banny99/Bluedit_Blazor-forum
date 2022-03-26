@@ -13,19 +13,21 @@ public class Post
     
     [Required (ErrorMessage = "Body cannot be empty!")]
     public string Body { get; set; }
-    
-    
+
+    public ICollection<Comment> Comments { get; set; }
 
 
     public Post()
     {
+        Comments = new List<Comment>();
     }
 
-    public Post(User author, string header, string body)
+    public Post(User author, string header, string body, ICollection<Comment> comments)
     {
         Author = author;
         Header = header;
         Body = body;
+        Comments = comments;
     }
 
 
@@ -35,5 +37,10 @@ public class Post
         this.Author = toPost.Author;
         this.Header = toPost.Header;
         this.Body = toPost.Body;
+    }
+
+    public void AddComment(Comment comment)
+    {
+        Comments.Add(comment);
     }
 }

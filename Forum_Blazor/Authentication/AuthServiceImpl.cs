@@ -44,6 +44,7 @@ namespace Forum_Blazor.Authentication
 
         public async Task LogoutAsync()
         {
+            LoggedUser = null;
             await ClearUserFromCacheAsync();
             principal = CreateClaimsPrincipal(null);
             OnAuthStateChanged.Invoke(principal);

@@ -60,4 +60,11 @@ public class PostJsonDao : IPostDao
         await _jsonContext.SaveChangesAsync();
         return toUpdate;
     }
+
+    public async Task AddComment(Post post, Comment comment)
+    {
+        Post commentedPost = _jsonContext.Forum.Posts.First(p => p.Id == post.Id);
+        commentedPost.AddComment(comment);
+        await _jsonContext.SaveChangesAsync();
+    }
 }

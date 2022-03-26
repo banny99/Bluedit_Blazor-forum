@@ -10,13 +10,17 @@ public class User
         UserName = userName;
         Password = password;
         Role = role;
-        Role = "none";
         SecurityLevel = securityLevel;
         BirthYear = birthYear;
     }
 
     public User() { }
-    
+
+    public User(string userName)
+    {
+        UserName = userName;
+    }
+
 
     [Required, MaxLength(128)] 
     public string UserName { get; set; }

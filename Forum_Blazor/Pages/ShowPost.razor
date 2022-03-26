@@ -1,29 +1,48 @@
 ﻿@page "/ShowPost/{Id:int}"
 @using Entities.Models
 @using Contracts.Services
+@using Forum_Blazor.Authentication
 
 @inject IPostService _postService
+@inject IUserService _userService
 @inject NavigationManager _navMgr
+@inject IAuthService _authService
 
 
 <PageTitle>Post : @_shownPost</PageTitle>
 
 <div class="box">
+    <h3>@_shownPost.Header</h3>
+    <h5>Author: @_shownPost.Author.UserName</h5>
+    <p>
+        @_shownPost.Body
+    </p>
+    
+    <label>Comment:</label>
+    <input type="text" @bind="_comment!.Text"/>
+    <button @onclick="Comment">Comment</button>
     
     @if (!string.IsNullOrEmpty(_errorLabel))
     {
         <label>@_errorLabel</label>
     }
 
-    else
+    @if (!_shownPost.Comments.Any())
     {
-        <h3>@_shownPost.Header</h3>
-        <h5>Author: @_shownPost.Author.UserName</h5>
         <p>
-            @_shownPost.Body
+            <em>No coments exist...</em>
         </p>
     }
-    
+
+    else
+    {
+        <h6>Comments</h6>
+        @foreach (var comment in _shownPost.Comments)
+        {
+            <p>@comment.WrittenBy.UserName : @comment.Text</p>
+        }
+    }
+
 </div>
 
 
@@ -33,7 +52,9 @@
 
     private Post _shownPost = null!;
     private string _errorLabel = String.Empty;
-    
+
+    private Comment _comment = new Comment();
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -46,4 +67,24 @@
         }
         
     }
+
+    private void Comment()
+    {
+        if ( string.IsNullOrEmpty(_comment.Text))
+        {
+            Console.WriteLine("invalid comment");
+            _errorLabel = "invalid comment";
+        }
+        else
+        {
+            _comment.WrittenBy = _authService.GetLoggedUser();
+            
+            //if writtenBy == null:
+            _comment.WrittenBy ??= new User("anonym");
+            _postService.AddComment(_shownPost, _comment);
+        }
+        
+        _comment = new Comment();
+    }
+
 }

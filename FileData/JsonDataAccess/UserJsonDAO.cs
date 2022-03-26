@@ -23,9 +23,10 @@ public class UserJsonDAO : IUserDao
         throw new NotImplementedException();
     }
 
-    public Task<User> GetByUsername(string username)
+    public async Task<User> GetByUsername(string username)
     {
-        return Task.FromResult(_jsonContext.Forum.Users.First(u => u.UserName.Equals(username)));
+        var user = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
+        return user;
     }
 
     public async Task<User> AddAsync(User u)
