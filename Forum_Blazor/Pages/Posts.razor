@@ -13,12 +13,14 @@
 <AuthorizeView>
     
     <Authorized>
-        <button @onclick="CreatePost">Create Post</button>
+        <button class="btn btn-primary btn-rounded" @onclick="CreatePost">+</button>
+        <br/>
     </Authorized>
 
     <NotAuthorized>
         <div>
             <p>Log-in first, to create a Post!</p>
+            <br/>
         </div>
     </NotAuthorized>
 </AuthorizeView>

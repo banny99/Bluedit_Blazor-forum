@@ -6,7 +6,7 @@ public class Post
 {
     
     public int Id { get; set; }
-    public User Author { get; set; }
+    public User? Author { get; set; }
     
     [Required (ErrorMessage = "Header is required!")]
     public string Header { get; set; }
@@ -22,7 +22,7 @@ public class Post
         Comments = new List<Comment>();
     }
 
-    public Post(User author, string header, string body, ICollection<Comment> comments)
+    public Post(User? author, string header, string body, ICollection<Comment> comments)
     {
         Author = author;
         Header = header;

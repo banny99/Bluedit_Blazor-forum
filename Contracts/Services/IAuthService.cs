@@ -11,5 +11,5 @@ public interface IAuthService
 
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; }
 
-    public User GetLoggedUser();
+    public User? GetLoggedUser();
 }

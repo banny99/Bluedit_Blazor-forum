@@ -10,34 +10,65 @@
 <h3>Log-in</h3>
 
 <AuthorizeView>
+    @* <NotAuthorized> *@
+    @*     <div class="card"> *@
+    @*         <h3>Please login</h3> *@
+    @* *@
+    @*         <form> *@
+    @*             <!-- Username input --> *@
+    @*             <div class="form-outline mb-4"> *@
+    @*                 <input type="text" id="form2Example1" class="form-control" @bind="_userName" /> *@
+    @*                 <label class="form-label" for="form2Example1">user name</label> *@
+    @*             </div> *@
+    @*          *@
+    @*             <!-- Password input --> *@
+    @*             <div class="form-outline mb-4"> *@
+    @*                 <input type="password" id="form2Example2" class="form-control" @bind="_password" /> *@
+    @*                 <label class="form-label" for="form2Example2">password</label> *@
+    @*             </div> *@
+    @* *@
+    @*             <!-- Submit button --> *@
+    @*             <button type="submit" class="btn btn-primary btn-block mb-4" @onclick="LoginAsync">log in</button> *@
+    @*            *@
+    @*             <div class="field"> *@
+    @*                 <p>Do NOT have an account? Register.</p> *@
+    @*                 <button type="button" class="btn btn-primary btn-rounded" @onclick="Register">register</button> *@
+    @*             </div> *@
+    @* *@
+    @*         </form> *@
+    @*     </div> *@
+    @* </NotAuthorized> *@
+    
     <NotAuthorized>
-        <div class="card">
-            <h3>Please login</h3>
-
-            <form>
-              <!-- Username input -->
-              <div class="form-outline mb-4">
-                <input type="text" id="form2Example1" class="form-control" @bind="_userName" />
-                <label class="form-label" for="form2Example1">user name</label>
-              </div>
-            
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <input type="password" id="form2Example2" class="form-control" @bind="_password" />
-                <label class="form-label" for="form2Example2">password</label>
-              </div>
-
-              <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-4" @onclick="LoginAsync">log in</button>
-              
-              <div class="field">
-                  <p>Do NOT have an account? Register.</p>
-                  <button type="button" class="btn btn-primary btn-rounded" @onclick="Register">register</button>
-              </div>
-
-            </form>
-        </div>
-    </NotAuthorized>
+            <div class="card">
+                <h3>Please login</h3>
+                <div class="field">
+                    <label>User name:</label>
+                    <input type="text" @bind="_userName"/>
+                </div>
+                <div class="field">
+                    <label style="text-align: center">Password:</label>
+                    <input type="password" @bind="_password"/>
+                </div>
+                @if (!string.IsNullOrEmpty(_errorLabel))
+                {
+                    <div class="field">
+                        <label style="color: red">
+                            @_errorLabel
+                        </label>
+                    </div>
+                }
+                <div class="field">
+                    <button type="submit" class="btn btn-primary btn-block mb-4" @onclick="LoginAsync">log in</button>
+                </div>
+                
+                <div class="field">
+                    <p>Do NOT have an account? Register.</p>
+                    <button type="button" class="btn btn-primary btn-rounded" @onclick="Register">register</button>
+                </div>
+                
+            </div>
+        </NotAuthorized>
     
     @* ------------------------------------------------------------ *@
     

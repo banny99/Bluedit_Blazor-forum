@@ -11,39 +11,36 @@
 
 
 <div class="box">
-    <h3>CreatePost</h3>
+    <h3>Create Post</h3>
     
     <EditForm Model="@_newPost" OnValidSubmit="@CreateNewPost">
-            <DataAnnotationsValidator/>
-            <ValidationSummary/>
-           
-            <div class="form-group field">
-                <span>
-                    <label>Header:</label>
-                </span>
-                <span>
-                    <InputText @bind-Value="_newPost.Header"/>
-                </span>
-            </div>
-            <div class="form-group field">
-                <span>
-                    <label>Body:</label>
-                </span>
-                <span>
-                    <InputTextArea rows="4" @bind-Value="_newPost.Body"/>
-                </span>
-            </div>
-            <p class="actions">
-                <button class="acceptbtn" type="submit">Create</button>
-            </p>
-        </EditForm>
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+        @if(!string.IsNullOrEmpty(_errorLabel))
+        {
+            <label>@_errorLabel</label>
+        }
+        
+        <div class="form-group field">
+            <span>
+                <label>Header:</label>
+            </span>
+            <span>
+                <InputText @bind-Value="_newPost.Header"/>
+            </span>
+        </div>
+        <div class="form-group field">
+            <span>
+                <InputTextArea style="width: 90%" rows="5" @bind-Value="_newPost.Body"/>
+            </span>
+        </div>
+        
+        <p class="actions">
+            <button type="submit" class="btn btn-primary btn-rounded">create</button>
+        </p>
+    </EditForm>
     
-    
-    @if(!string.IsNullOrEmpty(_errorLabel))
-    {
-        <label>@_errorLabel</label>
-    }
-    
+
     @if (_showModal)
     {
         <Modal>

@@ -11,7 +11,7 @@ namespace Forum_Blazor.Authentication
 
         public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
 
-        public User GetLoggedUser()
+        public User? GetLoggedUser()
         {
             return LoggedUser;
         }
@@ -19,7 +19,7 @@ namespace Forum_Blazor.Authentication
         // private readonly IUserService userService;
         private IUserService _userService;
         private readonly IJSRuntime _jsRuntime;
-        private User LoggedUser { get; set; }
+        private User? LoggedUser { get; set; }
         private ClaimsPrincipal principal;
 
         public AuthServiceImpl(IUserService userService, IJSRuntime jsRuntime)

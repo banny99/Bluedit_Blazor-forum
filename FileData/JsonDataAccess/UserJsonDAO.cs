@@ -13,7 +13,7 @@ public class UserJsonDAO : IUserDao
         _jsonContext = jsonContext;
     }
     
-    public async Task<ICollection<User>> GetAsync()
+    public async Task<ICollection<User?>> GetAsync()
     {
         return _jsonContext.Forum.Users;
     }
@@ -23,30 +23,30 @@ public class UserJsonDAO : IUserDao
         throw new NotImplementedException();
     }
 
-    public async Task<User> GetByUsername(string username)
+    public async Task<User?> GetByUsername(string username)
     {
         var user = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
         return user;
     }
 
-    public async Task<User> AddAsync(User u)
+    public async Task<User?> AddAsync(User? u)
     {
         _jsonContext.Forum.Users.Add(u);
         await _jsonContext.SaveChangesAsync();
         return u;
     }
 
-    public async Task<User> DeleteAsync(string username)
+    public async Task<User?> DeleteAsync(string username)
     {
-        User userToRemove = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
+        User? userToRemove = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
         _jsonContext.Forum.Users.Remove(userToRemove);
         await _jsonContext.SaveChangesAsync();
         return userToRemove;
     }
 
-    public async Task<User> UpdateAsync(User user)
+    public async Task<User?> UpdateAsync(User user)
     {
-        User userToUpdate = _jsonContext.Forum.Users.First(u => u.Equals(user));
+        User? userToUpdate = _jsonContext.Forum.Users.First(u => u.Equals(user));
         userToUpdate.Password = user.Password;
         await _jsonContext.SaveChangesAsync();
         return userToUpdate;

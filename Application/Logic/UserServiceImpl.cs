@@ -13,7 +13,7 @@ public class UserServiceImpl : IUserService
         _userDao = userDao;
     }
 
-    public Task<ICollection<User>> GetAsync()
+    public Task<ICollection<User?>> GetAsync()
     {
         return _userDao.GetAsync();
     }
@@ -23,12 +23,12 @@ public class UserServiceImpl : IUserService
         return _userDao.GetById(id);
     }
 
-    public Task<User> GetByUsername(string username)
+    public Task<User?> GetByUsername(string username)
     {
         return _userDao.GetByUsername(username);
     }
 
-    public async Task<User> AddAsync(User user)
+    public async Task<User?> AddAsync(User? user)
     {
         if (user.Password.Any(char.IsWhiteSpace))
             throw new Exception("Password cannot contain any white-space characters!");
@@ -44,7 +44,7 @@ public class UserServiceImpl : IUserService
         try
         {
             //if found ->no exception thrown-> user already exists
-            User u = await GetByUsername(user.UserName);
+            User? u = await GetByUsername(user.UserName);
         }
         catch (Exception e)
         {
@@ -54,12 +54,12 @@ public class UserServiceImpl : IUserService
         throw new Exception($"User with username: {user.UserName} already exists!!");
     }
 
-    public Task<User> DeleteAsync(string username)
+    public Task<User?> DeleteAsync(string username)
     {
         return _userDao.DeleteAsync(username);
     }
 
-    public Task<User> UpdateAsync(User user)
+    public Task<User?> UpdateAsync(User user)
     {
         return _userDao.UpdateAsync(user);
     }
