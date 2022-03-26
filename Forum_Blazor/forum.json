@@ -64,6 +64,88 @@
             "BirthYear": 0
           },
           "Text": "ml"
+        },
+        {
+          "WrittenBy": {
+            "UserName": "anonym",
+            "Password": null,
+            "Role": null,
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "asd"
+        }
+      ]
+    },
+    {
+      "Id": 1,
+      "Author": {
+        "UserName": "Monica",
+        "Password": "pass123",
+        "Role": "none",
+        "SecurityLevel": 0,
+        "BirthYear": 0
+      },
+      "Header": "new post",
+      "Body": "asd laks dkasd asaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\naaaaaaaaaaaaaaaaaaaaa\n",
+      "Comments": [
+        {
+          "WrittenBy": {
+            "UserName": "Monica",
+            "Password": "pass123",
+            "Role": "none",
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "asdlk "
+        }
+      ]
+    },
+    {
+      "Id": 2,
+      "Author": {
+        "UserName": "Monica",
+        "Password": "pass123",
+        "Role": "none",
+        "SecurityLevel": 0,
+        "BirthYear": 0
+      },
+      "Header": "sdsfgsf",
+      "Body": "sdfsdfsdf",
+      "Comments": [
+        {
+          "WrittenBy": {
+            "UserName": "anonym",
+            "Password": null,
+            "Role": null,
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "asdlk "
+        }
+      ]
+    },
+    {
+      "Id": 3,
+      "Author": {
+        "UserName": "Monica",
+        "Password": "pass123",
+        "Role": "none",
+        "SecurityLevel": 0,
+        "BirthYear": 0
+      },
+      "Header": "aaaaaaaaa",
+      "Body": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "Comments": [
+        {
+          "WrittenBy": {
+            "UserName": "anonym",
+            "Password": null,
+            "Role": null,
+            "SecurityLevel": 0,
+            "BirthYear": 0
+          },
+          "Text": "fff"
         }
       ]
     }

@@ -24,62 +24,52 @@
 </AuthorizeView>
 
 
- @if (_allPosts == null)
-        {
-            <p>
-                <em>Loading...</em>
-            </p>
-        }
         
- else if (!_allPosts.Any())
-        {
-            <p>
-                <em>No posts items exist. Please add some.</em>
-            </p>
-        }
+ @if (!_allPosts.Any())
+ {
+     <p>
+         <em>No posts items exist. Please add some.</em>
+     </p>
+     
+ }
 
  else if (!_postsToShow.Any())
-        {
-            <p>
-                <em>No posts matching your search criteria</em>
-            </p>
-        }
-        else
-        {
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Post-ID</th>
-                    <th>Author</th>
-                    <th>Header</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in _postsToShow)
-                {
-                    <tr @onclick="@(() => ShowPost(item.Id))">
-                        <td>@item.Id</td>
-                        <td>@item.Author.UserName</td>
-                        <td>@item.Header</td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        }
+ {
+     <p>
+         <em>No posts matching your search criteria</em>
+     </p>
+ }
+ else
+ {
+     <div class="row">
+         @foreach (var item in _postsToShow)
+         {
+             <div class="col-sm-4">
+                 <div class="card">
+                     <div class="card-body">
+                         <h5 class="card-title">@item.Header [@item.Id]</h5>
+                         <p class="card-text">@item.Author.UserName</p>
+                         <a href="#" class="btn btn-primary" @onclick="@(() => ShowPost(item.Id))">View post</a>
+                     </div>
+                 </div>
+             </div>
+         }
+     </div>
+     
+ }
 
-        @if (!string.IsNullOrEmpty(_errorLabel))
-        {
-            <label style="color: red">@_errorLabel</label>
-        }
-
-
+@if (!string.IsNullOrEmpty(_errorLabel))
+{
+    <label style="color: red">@_errorLabel</label>
+    
+}
 
 
 
 @code {
     private ICollection<Post> _allPosts, _postsToShow;
     private string _errorLabel;
-    
+
     protected override async Task OnInitializedAsync()
     {
         _allPosts = await _postService.GetAsync();
@@ -106,5 +96,4 @@
     {
         _navMgr.NavigateTo($"/ShowPost/{itemId}");
     }
-
 }

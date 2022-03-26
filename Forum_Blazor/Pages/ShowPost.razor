@@ -18,9 +18,13 @@
         @_shownPost.Body
     </p>
     
-    <label>Comment:</label>
-    <input type="text" @bind="_comment!.Text"/>
-    <button @onclick="Comment">Comment</button>
+    <div class="form-outline">
+        <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="20" @bind="_comment.Text"/>
+        <label class="form-label" for="form16">Comment ...</label>
+        <button type="button" class="btn btn-primary btn-rounded" @onclick="Comment">submit</button>
+    </div>
+    
+    
     
     @if (!string.IsNullOrEmpty(_errorLabel))
     {
@@ -29,18 +33,36 @@
 
     @if (!_shownPost.Comments.Any())
     {
-        <p>
-            <em>No coments exist...</em>
-        </p>
+        <br/>
+        <div class="card">
+            <div class="card-header">Comments</div>
+            <div class="card-body">
+                 <em>No coments exist...</em>
+            </div>
+        </div>
     }
 
     else
     {
-        <h6>Comments</h6>
-        @foreach (var comment in _shownPost.Comments)
-        {
-            <p>@comment.WrittenBy.UserName : @comment.Text</p>
-        }
+        <br/>
+        <div class="card">
+            <div class="card-header">Comments</div>
+            <div class="card-body">
+                @foreach (var comment in _shownPost.Comments)
+                        {
+                            <br/>
+                            <div class="card">
+                                <div class="card-header">@comment.WrittenBy.UserName</div>
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <p>@comment.Text</p>
+                                        <footer class="blockquote-footer">(timestamp)?</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        }
+            </div>
+        </div>
     }
 
 </div>

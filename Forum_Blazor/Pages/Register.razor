@@ -1,6 +1,5 @@
 ﻿@page "/Register"
 @using Entities.Models
-@using Entities.Interfaces
 @using Contracts.Services
 
 @inject NavigationManager _navMgr
@@ -14,6 +13,8 @@
     <EditForm Model="@_newUser" OnValidSubmit="@RegisterUser">
         <DataAnnotationsValidator/>
         <ValidationSummary/>
+        @if(!string.IsNullOrEmpty(_errorLabel)) {<label style="color: red">@_errorLabel</label>}
+        
         <div class="form-group field">
             <span>
                 <label>Username:</label>
@@ -30,15 +31,9 @@
                 <InputText rows="4" @bind-Value="_newUser.Password"/>
             </span>
         </div>
-        <p class="actions">
-            <button class="acceptbtn" type="submit">Create</button>
-        </p>
+        <br/>
+        <button type="submit" class="btn btn-primary btn-rounded" @onclick="RegisterUser">register</button>
     </EditForm>
-    
-    
-    @if(!string.IsNullOrEmpty(_errorLabel)) {
-        <label>@_errorLabel</label>
-    }
 
 </div>
 

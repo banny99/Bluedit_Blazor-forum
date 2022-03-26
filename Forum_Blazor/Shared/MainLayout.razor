@@ -1,21 +1,41 @@
 ﻿@inherits LayoutComponentBase
 @using Login
 
-<PageTitle>Forum_Blazor</PageTitle>
+<PageTitle>BlueDit</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu/>
-    </div>
+    @* <div class="sidebar"> *@
+    @*     <NavMenu/> *@
+    @* </div> *@
 
     <main>
-        <div class="top-row px-4">
-            <LoginButtons/>
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+        <div class="top-row px-4" style="background: linear-gradient(to right, rgba(27, 54, 136, 1), rgba(0, 155, 194, 1))">
+            <div class="nav-item px-1">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All" style="color: black">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+            
+            <div class="nav-item px-1">
+                <NavLink class="nav-link " href="Posts" style="color: black">
+                    <span class="oi oi-list" aria-hidden="true"></span> Posts
+                </NavLink>
+            </div>
+            
+            <div class="nav-item px-1">
+                <LoginButtons/>
+            </div>
 
+        </div>
+        
         <article class="content px-4">
-            @Body
+            <div class="row">
+              <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    @Body
+                </div>
+              <div class="col-md-1"></div>
+            </div>
         </article>
     </main>
 </div>
