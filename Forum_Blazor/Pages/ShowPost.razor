@@ -4,8 +4,8 @@
 @using Forum_Blazor.Authentication
 
 @inject IPostService _postService
-@inject IUserService _userService
-@inject NavigationManager _navMgr
+@* @inject IUserService _userService *@
+@* @inject NavigationManager _navMgr *@
 @inject IAuthService _authService
 
 
@@ -19,7 +19,7 @@
     </p>
     
     <div class="form-outline">
-        <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="20" @bind="_comment.Text"/>
+        <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="64" @bind="_comment.Text"/>
         <label class="form-label" for="form16">Comment ...</label>
         <button type="button" class="btn btn-primary btn-rounded" @onclick="Comment">submit</button>
     </div>

@@ -30,7 +30,6 @@ namespace Forum_Blazor.Authentication
 
         public async Task LoginAsync(string username, string password)
         {
-            // User? user = await userService.GetUserAsync(username);
             LoggedUser = await _userService.GetByUsername(username);
 
             ValidateLoginCredentials(password, LoggedUser);

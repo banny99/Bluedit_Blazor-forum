@@ -23,7 +23,6 @@ builder.Services.AddScoped<IUserDao, UserJsonDAO>();
 //log in/out services:
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();
 builder.Services.AddScoped<IAuthService, AuthServiceImpl>();
-// builder.Services.AddScoped<IUserService, InMemoryUserService>();
 
 var app = builder.Build();
 
