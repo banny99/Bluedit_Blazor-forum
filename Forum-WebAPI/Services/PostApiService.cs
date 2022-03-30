@@ -2,13 +2,13 @@
 using Entities.Interfaces;
 using Entities.Models;
 
-namespace Application.Logic;
+namespace Forum_WebAPI.Services;
 
-public class PostServiceImpl : IPostService
+public class PostApiService : IPostService
 {
     private IPostDao PostDao { get; set; }
 
-    public PostServiceImpl(IPostDao postDao)
+    public PostApiService(IPostDao postDao)
     {
         PostDao = postDao;
     }

@@ -25,9 +25,9 @@ public class PostJsonDao : IPostDao
         return _jsonContext.Forum.Posts.First(p => p.Id == id);
     }
 
-    public async Task<Post> GetByAuthor(User author)
-    {
-        return _jsonContext.Forum.Posts.First(p => p.Author.Equals(author));
+    public async Task<Post> GetByAuthor(int authorId) 
+    { 
+        return _jsonContext.Forum.Posts.First(p => p.Author!.Id==authorId); 
     }
 
     public async Task<Post> AddAsync(Post post)

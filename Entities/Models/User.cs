@@ -5,8 +5,9 @@ namespace Entities.Models;
 public class User
 {
 
-    public User(string userName, string password, string role, int securityLevel, int birthYear)
+    public User(int id, string userName, string password, string role, int securityLevel, int birthYear)
     {
+        Id = id;
         UserName = userName;
         Password = password;
         Role = role;
@@ -21,6 +22,9 @@ public class User
         UserName = userName;
     }
 
+
+    [Required]
+    public int Id { get; set; }
 
     [Required, MaxLength(128)] 
     public string UserName { get; set; }
