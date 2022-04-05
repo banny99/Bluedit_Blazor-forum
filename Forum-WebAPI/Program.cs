@@ -1,7 +1,7 @@
+using Application.Logic;
 using Contracts.Services;
 using Entities.Interfaces;
 using FileData.JsonDataAccess;
-using Forum_WebAPI.Services;
 using JsonDataAccess.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +13,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IPostService, PostApiService>();
-builder.Services.AddScoped<IPostDao, PostJsonDao>();
+
+builder.Services.AddScoped<IPostService, PostServiceImpl>();
+builder.Services.AddScoped<IUserService, UserServiceImpl>();
+
 builder.Services.AddScoped<JsonContext>();
+builder.Services.AddScoped<IPostDao, PostJsonDao>();
+builder.Services.AddScoped<IUserDao, UserJsonDAO>();
 
 var app = builder.Build();
 

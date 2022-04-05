@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Entities\Entities.csproj" />
       <ProjectReference Include="..\FileData\FileData.csproj" />
+      <ProjectReference Include="..\Forum-Client\Forum-Client.csproj" />
     </ItemGroup>
 
     <ItemGroup>

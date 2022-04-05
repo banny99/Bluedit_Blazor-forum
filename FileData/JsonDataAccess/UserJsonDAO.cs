@@ -18,15 +18,14 @@ public class UserJsonDAO : IUserDao
         return _jsonContext.Forum.Users;
     }
 
-    public Task<User> GetById(int id)
+    public async Task<User> GetById(int id)
     {
-        throw new NotImplementedException();
+        return _jsonContext.Forum.Users.First(u => u.Id == id)!;
     }
 
     public async Task<User?> GetByUsername(string username)
     {
-        var user = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
-        return user;
+        return _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
     }
 
     public async Task<User?> AddAsync(User? u)

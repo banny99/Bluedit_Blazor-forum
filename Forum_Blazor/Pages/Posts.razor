@@ -1,4 +1,4 @@
-﻿@page "/Posts"
+﻿@page "/posts"
 @using Entities.Models
 @using Contracts.Services
 
@@ -26,16 +26,20 @@
 </AuthorizeView>
 
 
-        
- @if (!_allPosts.Any())
+@if (_allPosts == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (!_allPosts.Any())
  {
      <p>
          <em>No posts items exist. Please add some.</em>
      </p>
      
  }
-
- else if (!_postsToShow.Any())
+else if (!_postsToShow.Any())
  {
      <p>
          <em>No posts matching your search criteria</em>
@@ -50,7 +54,7 @@
                  <div class="card">
                      <div class="card-body">
                          <h5 class="card-title">@item.Header [@item.Id]</h5>
-                         <p class="card-text">@item.Author.UserName</p>
+                         <p class="card-text">@item.Author!.UserName</p>
                          <a href="#" class="btn btn-primary" @onclick="@(() => ShowPost(item.Id))">View post</a>
                      </div>
                  </div>
@@ -78,7 +82,7 @@
         _postsToShow = _allPosts;
     }
 
-    public void CreatePost()
+    private void CreatePost()
     {
         _navMgr.NavigateTo("/CreatePost");
     }
@@ -96,6 +100,6 @@
 
     private void ShowPost(int itemId)
     {
-        _navMgr.NavigateTo($"/ShowPost/{itemId}");
+        _navMgr.NavigateTo($"/posts/{itemId}");
     }
 }

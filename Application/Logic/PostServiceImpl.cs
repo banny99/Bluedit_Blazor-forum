@@ -14,7 +14,7 @@ public class PostServiceImpl : IPostService
     }
 
     
-    public Task<ICollection<Post>> GetAsync()
+    public Task<ICollection<Post>?> GetAsync()
     {
         return PostDao.GetAsync();
     }

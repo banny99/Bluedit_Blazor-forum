@@ -1,10 +1,7 @@
-using Application.Logic;
 using Contracts.Services;
-using Entities.Interfaces;
-using FileData.JsonDataAccess;
 using Forum_Blazor.Authentication;
-using JsonDataAccess.Context;
 using Microsoft.AspNetCore.Components.Authorization;
+using RESTClient.clients;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,11 +11,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 //serialization services:
-builder.Services.AddScoped<JsonContext>();
-builder.Services.AddScoped<IPostService, PostServiceImpl>();
-builder.Services.AddScoped<IUserService, UserServiceImpl>();
-builder.Services.AddScoped<IPostDao, PostJsonDao>();
-builder.Services.AddScoped<IUserDao, UserJsonDAO>();
+builder.Services.AddScoped<IPostService, PostClient>();
+builder.Services.AddScoped<IUserService, UserClient>();
+
 
 //log in/out services:
 builder.Services.AddScoped<AuthenticationStateProvider, SimpleAuthenticationStateProvider>();

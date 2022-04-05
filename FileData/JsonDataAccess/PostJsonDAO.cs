@@ -13,7 +13,7 @@ public class PostJsonDao : IPostDao
         _jsonContext = jsonContext;
     }
     
-    public async Task<ICollection<Post>> GetAsync()
+    public async Task<ICollection<Post>?> GetAsync()
     {
         Forum f = _jsonContext.Forum;
         return f.Posts;

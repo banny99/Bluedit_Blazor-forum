@@ -1,70 +1,86 @@
-﻿@page "/ShowPost/{Id:int}"
+﻿@page "/posts/{Id:int}"
 @using Entities.Models
 @using Contracts.Services
 @using Forum_Blazor.Authentication
 
 @inject IPostService _postService
-@* @inject IUserService _userService *@
-@* @inject NavigationManager _navMgr *@
 @inject IAuthService _authService
 
 
-<PageTitle>Post : @_shownPost</PageTitle>
+<PageTitle>Post</PageTitle>
 
 <div class="box">
-    <h3>@_shownPost.Header</h3>
-    <h5>Author: @_shownPost.Author.UserName</h5>
-    <p>
-        @_shownPost.Body
-    </p>
-    
-    <div class="form-outline">
-        <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="64" @bind="_comment.Text"/>
-        <label class="form-label" for="form16">Comment ...</label>
-        <button type="button" class="btn btn-primary btn-rounded" @onclick="Comment">submit</button>
-    </div>
-    
-    
     
     @if (!string.IsNullOrEmpty(_errorLabel))
     {
         <label>@_errorLabel</label>
     }
-
-    @if (!_shownPost.Comments.Any())
+    
+    @if (_shownPost == null)
     {
-        <br/>
-        <div class="card">
-            <div class="card-header">Comments</div>
-            <div class="card-body">
-                 <em>No coments exist...</em>
-            </div>
-        </div>
+        <p>
+            <em>Loading...</em>
+        </p>
     }
-
     else
     {
+        <h3>
+            Header: @_shownPost.Header
+        </h3>
+        <h5>
+            Author: @_shownPost.Author.UserName
+        </h5>
+        
+        <p>
+            @_shownPost.Body
+        </p>
+        
+        <textarea @bind="commentTxt">...</textarea>
+        <button @onclick="Comment">submit</button>
+        
         <br/>
-        <div class="card">
-            <div class="card-header">Comments</div>
-            <div class="card-body">
-                @foreach (var comment in _shownPost.Comments)
-                        {
-                            <br/>
-                            <div class="card">
-                                <div class="card-header">@comment.WrittenBy.UserName</div>
-                                <div class="card-body">
-                                    <blockquote class="blockquote mb-0">
-                                        <p>@comment.Text</p>
-                                        <footer class="blockquote-footer">(timestamp)?</footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        }
+        if (!_shownPost.Comments.Any())
+        {
+            <div class="card">
+                <div class="card-header">
+                    Comments
+                </div>
+                <div class="card-body">
+                    <em>No comments exist...</em>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    Comments
+                </div>
+                <div class="card-body">
+                    @foreach (var comment in _shownPost.Comments)
+                    {
+                        <br/>
+                        <div class="card">
+                            @if (comment.WrittenBy == null){
+                                <div class="card-header">Anonym</div>
+                            }
+                            else{
+                                <div class="card-header">@comment.WrittenBy.UserName</div>
+                            }
+    
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p>@comment.Text</p>
+                                    <footer class="blockquote-footer">(timestamp)?</footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
     }
-
+    
 </div>
 
 
@@ -72,10 +88,11 @@
     [Parameter]
     public int Id { get; set; }
 
-    private Post _shownPost = null!;
+    private Post? _shownPost;
     private string _errorLabel = String.Empty;
 
-    private Comment _comment = new Comment();
+    private Comment _comment = null!;
+    private string commentTxt = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -92,21 +109,23 @@
 
     private void Comment()
     {
-        if ( string.IsNullOrEmpty(_comment.Text))
+        _comment = new Comment();
+        
+        if ( string.IsNullOrEmpty(commentTxt))
         {
-            Console.WriteLine("invalid comment");
             _errorLabel = "invalid comment";
         }
         else
         {
+            _comment.Text = commentTxt;
             _comment.WrittenBy = _authService.GetLoggedUser();
             
             //if writtenBy == null:
-            _comment.WrittenBy ??= new User("anonym");
-            _postService.AddComment(_shownPost, _comment);
+            // _comment.WrittenBy ??= new User("anonym");
+            
+            _postService.AddComment(_shownPost!, _comment);
         }
         
-        _comment = new Comment();
     }
 
 }

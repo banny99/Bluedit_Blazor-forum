@@ -5,23 +5,22 @@ using Microsoft.AspNetCore.Mvc;
 namespace Forum_WebAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("posts")]
 public class PostController : ControllerBase
 {
 
-    private IPostService _postApiService;
-    public PostController(IPostService postApiService)
+    private IPostService _postService;
+    public PostController(IPostService postService)
     {
-        _postApiService = postApiService;
+        _postService = postService;
     }
 
     [HttpGet]
-    [Route("allposts")]
     public async Task<ActionResult<ICollection<Post>>> GetAllPosts()
     {
         try
         {
-            var allPosts = await _postApiService.GetAsync();
+            var allPosts = await _postService.GetAsync();
             return Ok(allPosts);
         }
         catch (Exception e)
@@ -36,7 +35,7 @@ public class PostController : ControllerBase
     {
         try
         {
-            var post = await _postApiService.GetById(postId);
+            var post = await _postService.GetById(postId);
             return Ok(post);
         }
         catch (Exception e)
@@ -62,12 +61,12 @@ public class PostController : ControllerBase
     
     
     [HttpDelete]
-    [Route("{id:int}")]
+    [Route("{postId:int}")]
     public async Task<ActionResult<Post>> DeletePostById([FromRoute] int id)
     {
         try
         {
-            var deletedPost = await _postApiService.DeleteAsync(id);
+            var deletedPost = await _postService.DeleteAsync(id);
             return Ok(deletedPost);
         }
         catch (Exception e)
@@ -77,12 +76,11 @@ public class PostController : ControllerBase
     }
     
     [HttpPost]
-    [Route("newPost")]
     public async Task<ActionResult<Post>> CreateNewPost([FromBody] Post post)
     {
         try
         {
-            var createdPost = await _postApiService.AddAsync(post);
+            var createdPost = await _postService.AddAsync(post);
             return Ok(createdPost);
         }
         catch (Exception e)

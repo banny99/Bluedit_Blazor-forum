@@ -4,7 +4,7 @@ public class Forum
 {
     // Add e.g. ICollection<Post> or ICollection<SubForum> or similar.
     public ICollection<User?> Users { get; set; }
-    public ICollection<Post> Posts { get; set; }
+    public ICollection<Post>? Posts { get; set; }
 
     public Forum()
     {

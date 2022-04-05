@@ -4,7 +4,7 @@ namespace Entities.Interfaces;
 
 public interface IPostDao
 {
-    public Task<ICollection<Post>> GetAsync();
+    public Task<ICollection<Post>?> GetAsync();
     public Task<Post> GetById(int id);
     public Task<Post> GetByAuthor(int authorId);
     public Task<Post> AddAsync(Post post);

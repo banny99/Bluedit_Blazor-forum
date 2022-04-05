@@ -30,6 +30,9 @@ public class UserServiceImpl : IUserService
 
     public async Task<User?> AddAsync(User? user)
     {
+        if (user == null)
+            throw new Exception("Enter required fields please!");
+        
         if (user.Password.Any(char.IsWhiteSpace))
             throw new Exception("Password cannot contain any white-space characters!");
         if (!user.Password.Any(char.IsLetter))

@@ -20,32 +20,9 @@
         "SecurityLevel": 0,
         "BirthYear": 0
       },
-      "Header": "header1",
-      "Body": "body body body ...",
-      "Comments": [
-        {
-          "WrittenBy": {
-            "Id": 0,
-            "UserName": "anonym",
-            "Password": null,
-            "Role": null,
-            "SecurityLevel": 0,
-            "BirthYear": 0
-          },
-          "Text": "asdlk "
-        },
-        {
-          "WrittenBy": {
-            "Id": 0,
-            "UserName": "benjamin",
-            "Password": "pasS1",
-            "Role": "none",
-            "SecurityLevel": 0,
-            "BirthYear": 0
-          },
-          "Text": "gdfghdgfh"
-        }
-      ]
+      "Header": "ggg",
+      "Body": "asdfgasdf",
+      "Comments": []
     }
   ]
 }
