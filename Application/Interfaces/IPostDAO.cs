@@ -10,5 +10,4 @@ public interface IPostDao
     public Task<Post> AddAsync(Post post);
     public Task<Post> DeleteAsync(int id);
     public Task<Post> UpdateAsync(Post post);
-    public Task AddComment(Post post, Comment comment);
 }

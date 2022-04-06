@@ -12,6 +12,7 @@ builder.Services.AddServerSideBlazor();
 
 //serialization services:
 builder.Services.AddScoped<IPostService, PostClient>();
+builder.Services.AddScoped<ICommentService, CommentClient>();
 builder.Services.AddScoped<IUserService, UserClient>();
 
 

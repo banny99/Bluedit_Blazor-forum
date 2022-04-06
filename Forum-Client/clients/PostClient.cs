@@ -13,7 +13,7 @@ public class PostClient : IPostService
     public async Task<ICollection<Post>?> GetAsync()
     {
         using HttpClient client = new ();
-        HttpResponseMessage response = await client.GetAsync("https://localhost:7058/posts");
+        HttpResponseMessage response = await client.GetAsync(Uri);
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)

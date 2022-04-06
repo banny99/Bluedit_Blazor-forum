@@ -4,6 +4,7 @@
 @using Forum_Blazor.Authentication
 
 @inject IPostService _postService
+@inject ICommentService _commentService
 @inject IAuthService _authService
 
 
@@ -35,11 +36,19 @@
             @_shownPost.Body
         </p>
         
-        <textarea @bind="commentTxt">...</textarea>
-        <button @onclick="Comment">submit</button>
+
+        <div class="form-outline">
+            <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="64" @bind="_commentTxt"/>
+            <label class="form-label" for="form16">Comment ...</label>
+            <button type="button" class="btn btn-primary btn-rounded" @onclick="Comment">submit</button>
+        </div>
         
         <br/>
-        if (!_shownPost.Comments.Any())
+        if (_comments==null)
+        {
+            <p>Loading...</p>
+        }
+        else if (!_comments.Any())
         {
             <div class="card">
                 <div class="card-header">
@@ -57,17 +66,11 @@
                     Comments
                 </div>
                 <div class="card-body">
-                    @foreach (var comment in _shownPost.Comments)
+                    @foreach (var comment in _comments)
                     {
                         <br/>
                         <div class="card">
-                            @if (comment.WrittenBy == null){
-                                <div class="card-header">Anonym</div>
-                            }
-                            else{
-                                <div class="card-header">@comment.WrittenBy.UserName</div>
-                            }
-    
+                            <div class="card-header">@comment.Author</div>
                             <div class="card-body">
                                 <blockquote class="blockquote mb-0">
                                     <p>@comment.Text</p>
@@ -89,16 +92,18 @@
     public int Id { get; set; }
 
     private Post? _shownPost;
+    private ICollection<Comment>? _comments;
     private string _errorLabel = String.Empty;
 
     private Comment _comment = null!;
-    private string commentTxt = "";
+    private string _commentTxt = "";
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             _shownPost = await _postService.GetById(Id);
+            _comments = await _commentService.GetCommentsByPostId(_shownPost.Id);
         }
         catch (Exception e)
         {
@@ -109,21 +114,15 @@
 
     private void Comment()
     {
-        _comment = new Comment();
-        
-        if ( string.IsNullOrEmpty(commentTxt))
+        if ( string.IsNullOrEmpty(_commentTxt))
         {
             _errorLabel = "invalid comment";
         }
         else
         {
-            _comment.Text = commentTxt;
-            _comment.WrittenBy = _authService.GetLoggedUser();
-            
-            //if writtenBy == null:
-            // _comment.WrittenBy ??= new User("anonym");
-            
-            _postService.AddComment(_shownPost!, _comment);
+            _comment = new Comment(_authService.GetLoggedUser()!, _shownPost, _commentTxt);
+            _commentService.AddComment(_comment);
+            // _postService.AddComment(_shownPost!, _comment);
         }
         
     }

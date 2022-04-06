@@ -20,9 +20,24 @@
         "SecurityLevel": 0,
         "BirthYear": 0
       },
-      "Header": "ggg",
-      "Body": "asdfgasdf",
-      "Comments": []
+      "Header": "qwe",
+      "Body": "fasd xcvs vasd asd f\nasdf asdf asvcxz\nasdf asdfg asdfasd"
+    }
+  ],
+  "Comments": [
+    {
+      "Text": "asdfasdf",
+      "Id": 0,
+      "PostId": 0,
+      "AuthorId": 0,
+      "Author": "benjamin"
+    },
+    {
+      "Text": "ano nym",
+      "Id": 1,
+      "PostId": 0,
+      "AuthorId": -1,
+      "Author": "anonym"
     }
   ]
 }

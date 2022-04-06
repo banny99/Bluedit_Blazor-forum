@@ -16,10 +16,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPostService, PostServiceImpl>();
 builder.Services.AddScoped<IUserService, UserServiceImpl>();
+builder.Services.AddScoped<ICommentService, CommentServiceImpl>();
 
 builder.Services.AddScoped<JsonContext>();
 builder.Services.AddScoped<IPostDao, PostJsonDao>();
 builder.Services.AddScoped<IUserDao, UserJsonDAO>();
+builder.Services.AddScoped<ICommentDao, CommentJsonDao>();
 
 var app = builder.Build();
 

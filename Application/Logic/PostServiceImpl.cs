@@ -43,9 +43,5 @@ public class PostServiceImpl : IPostService
     {
         return PostDao.UpdateAsync(post);
     }
-
-    public void AddComment(Post post, Comment comment)
-    {
-        PostDao.AddComment(post, comment);
-    }
+    
 }
