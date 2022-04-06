@@ -13,15 +13,15 @@
 <AuthorizeView>
     
     <Authorized>
+        <br/>
         <button class="btn btn-primary btn-rounded" @onclick="CreatePost">+</button>
         <br/>
     </Authorized>
 
     <NotAuthorized>
-        <div>
-            <p>Log-in first, to create a Post!</p>
-            <br/>
-        </div>
+        <br/>
+        <p>Log-in first, to create a Post!</p>
+        <br/>
     </NotAuthorized>
 </AuthorizeView>
 
@@ -73,7 +73,7 @@ else if (!_postsToShow.Any())
 
 
 @code {
-    private ICollection<Post> _allPosts, _postsToShow;
+    private ICollection<Post>? _allPosts, _postsToShow;
     private string _errorLabel;
 
     protected override async Task OnInitializedAsync()
@@ -86,17 +86,7 @@ else if (!_postsToShow.Any())
     {
         _navMgr.NavigateTo("/CreatePost");
     }
-
-    private void RemovePost(int itemId)
-    {
-        Console.WriteLine($"Post-id to remove {itemId}");
-    }
-
-    private void EditPost(int itemId)
-    {
-        Console.WriteLine($"Post-id to edit {itemId}");
-    }
-
+    
 
     private void ShowPost(int itemId)
     {

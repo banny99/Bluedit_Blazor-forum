@@ -1,61 +1,163 @@
 ﻿@page "/login"
 @using Forum_Blazor.Authentication
+@using Entities.Models
+@using Contracts.Services
+@using UIElements
 
 @inject IAuthService _authService
+@inject IPostService _postService
+@inject ICommentService _commentService
 @inject NavigationManager _navMgr
 
 
 <PageTitle>Log-in</PageTitle>
 
-<h3>Log-in</h3>
-
 <AuthorizeView>
     <NotAuthorized>
-            <div class="card">
-                <h3>Please login</h3>
-                <div class="field">
-                    <label>User name:</label>
-                    <input type="text" @bind="_userName"/>
-                </div>
-                <div class="field">
-                    <label style="text-align: center">Password:</label>
-                    <input type="password" @bind="_password"/>
-                </div>
-                @if (!string.IsNullOrEmpty(_errorLabel))
-                {
-                    <div class="field">
-                        <label style="color: red">
-                            @_errorLabel
-                        </label>
-                    </div>
-                }
-                <div class="field">
-                    <button type="submit" class="btn btn-primary btn-block mb-4" @onclick="LoginAsync">log in</button>
-                </div>
-                
-                <div class="field">
-                    <p>Do NOT have an account? Register.</p>
-                    <button type="button" class="btn btn-primary btn-rounded" @onclick="Register">register</button>
-                </div>
-                
+        <h3>Log-in</h3>
+        
+        <div class="card">
+            <h3>Please login</h3>
+            <div class="field">
+                <label>User name:</label>
+                <input type="text" @bind="_userName"/>
             </div>
-        </NotAuthorized>
+            <div class="field">
+                <label style="text-align: center">Password:</label>
+                <input type="password" @bind="_password"/>
+            </div>
+            @if (!string.IsNullOrEmpty(_errorLabel))
+            {
+                <div class="field">
+                    <label style="color: red">
+                        @_errorLabel
+                    </label>
+                </div>
+            }
+            <div class="field">
+                <button type="submit" class="btn btn-primary btn-block mb-4" @onclick="LoginAsync">log in</button>
+            </div>
+
+            <div class="field">
+                <p>Do NOT have an account? Register.</p>
+                <button type="button" class="btn btn-primary btn-rounded" @onclick="Register">register</button>
+            </div>
+
+        </div>
+    </NotAuthorized>
     
     @* ------------------------------------------------------------ *@
     
     <Authorized>
         <h3>Hello, @context.User.Identity!.Name</h3>
+        <br/>
+        <h5>Here you can see your stats.</h5>
+
+        <button class="btn btn-primary btn-rounded" @onclick="CreatePost">+ create post</button>
+
+        @if (_yourPosts == null)
+        {
+            <p>
+                <em>Loading...</em>
+            </p>
+        }
+        else if (!_yourPosts.Any())
+         {
+             <p>
+                 <em>No posts items exist. Please add some.</em>
+             </p>
+             
+         }
+        else
+         {
+             <br/>
+             <div class="row">
+                 <h2>Your Posts [@_yourPosts.Count]</h2>
+                 @foreach (var item in _yourPosts)
+                 {
+                     <div class="col-sm-6">
+                         <div class="card">
+                             <div class="card-body">
+                                 <h5 class="card-title">@item.Header [@item.Id]</h5>
+                                 <p class="card-text">@item.Author.UserName</p>
+                                 <a href="#" class="btn btn-primary" @onclick="@(() => ViewPost(item.Id))">view</a>
+                                 <a href="#" class="btn btn-warning" @onclick="@(() => EditPost(item.Id))">edit</a>
+                                 <a href="#" class="btn btn-danger" @onclick="@(() => RemovePost(item.Id))">delete</a>
+                             </div>
+                         </div>
+                     </div>
+                 }
+             </div>
+         }
+        
+        
+        @if (_yourComments == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else if (!_yourComments.Any())
+        {
+            <p>
+                <em>No comment items exist. Please add some.</em>
+            </p>
+        }
+                 
+        else
+        {
+            <br/>
+            <div class="row">
+                <h2>Your Comments [@_yourComments.Count]</h2>
+                @foreach (var item in _yourComments)
+                {
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">post #@item.PostId [@item.Id]</h5>
+                                <p class="card-text">@item.Text</p>
+                                <a href="#" class="btn btn-primary" @onclick="@(() => ViewPost(item.PostId))">view</a>
+                                <a href="#" class="btn btn-warning" @onclick="@(() => EditComment(item.Id))">edit</a>
+                                <a href="#" class="btn btn-danger" @onclick="@(() => RemoveComment(item.Id))">delete</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        
+        @if (_showModal)
+        {
+            <Modal>
+                <p>Do you really wish to delete this post?</p>
+                <button @onclick="Delete" class="btn btn-danger btn-rounded">delete</button>
+                <button @onclick="Cancel" class="btn btn-warning btn-rounded">cancel</button>
+            </Modal>
+        }
     </Authorized>
     
 </AuthorizeView>
 
 
 
+
 @code {
-    
+    private ICollection<Post>? _yourPosts;
+    private ICollection<Comment>? _yourComments;
+
     private string _userName;
     private string _password;
     private string _errorLabel;
+    
+    private bool _showModal = false;
+    private int _selectedId;
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (_authService.GetLoggedUser() != null)
+        {
+            await Load();
+        }
+    }
 
     private async Task LoginAsync()
     {
@@ -63,12 +165,18 @@
         try
         {
             await _authService.LoginAsync(_userName, _password);
-            _navMgr.NavigateTo("/Posts");
+            await Load();
         }
         catch (Exception e)
         {
             _errorLabel = $"Error: {e.Message}";
         }
+    }
+    
+    private async Task Load()
+    {
+        _yourPosts = await _postService.GetPostsByAuthorId(_authService.GetLoggedUser().Id);
+        _yourComments = await _commentService.GetCommentsByAuthorId(_authService.GetLoggedUser().Id);
     }
 
     private void Register()
@@ -77,4 +185,48 @@
     }
 
     
+    private void EditPost(int itemId)
+    {
+        _navMgr.NavigateTo($"EditPost/{itemId}");
+    }
+    
+    private void RemovePost(int itemId)
+    {
+        _selectedId = itemId;
+        // _showModal = true;
+        _postService.DeleteAsync(itemId);
+    }
+    private void Delete()
+    {
+        _postService.DeleteAsync(_selectedId);
+        _showModal = false;
+    }
+
+    private void ViewPost(int itemId)
+    {
+        _navMgr.NavigateTo($"posts/{itemId}");
+    }
+
+    private void EditComment(int itemId)
+    {
+        _showModal = true;
+        Console.WriteLine($"Comment-id to edit {itemId}");
+    }
+
+    private void RemoveComment(int itemId)
+    {
+        Console.WriteLine($"Comment-id to remove {itemId}");
+    }
+
+    private void Cancel()
+    {
+        _selectedId = -1;
+        _showModal = false;
+    }
+
+    private void CreatePost()
+    {
+        _navMgr.NavigateTo("/CreatePost");
+    }
+
 }

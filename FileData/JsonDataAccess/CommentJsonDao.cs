@@ -13,9 +13,11 @@ public class CommentJsonDao : ICommentDao
     }
 
 
-    public async Task<ICollection<Comment>> GetAllComments()
+    public async Task<ICollection<Comment>?> GetAllComments()
     {
-        return _jsonContext.Forum.Comments;
+        Forum f = _jsonContext.Forum;
+        return f.Comments;
+        // return _jsonContext.Forum.Comments;
     }
 
     public async Task<Comment> GetCommentById(int commentId)
@@ -31,7 +33,7 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<ICollection<Comment>> GetCommentsByAuthorId(int authorId)
     {
-        return (ICollection<Comment>) _jsonContext.Forum.Comments.Where(c => c.AuthorId == authorId);
+        return _jsonContext.Forum.Comments.Where(c => c.AuthorId == authorId).ToList();
     }
 
     public async Task<Comment> AddComment(Comment comment)

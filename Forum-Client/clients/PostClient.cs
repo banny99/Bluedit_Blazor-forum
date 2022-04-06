@@ -32,8 +32,6 @@ public class PostClient : IPostService
     {
         using HttpClient client = new ();
         HttpResponseMessage response = await client.GetAsync(Uri + $"/{id}");
-        // HttpResponseMessage response = await client.GetAsync("https://localhost:7058/posts/0");
-        
         string content = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -48,9 +46,22 @@ public class PostClient : IPostService
         return post;
     }
 
-    public Task<Post> GetByAuthor(int authorId)
+    public async Task<ICollection<Post>> GetPostsByAuthorId(int authorId)
     {
-        throw new NotImplementedException();
+        using HttpClient client = new ();
+        HttpResponseMessage response = await client.GetAsync(Uri +"/authors/"+ authorId);
+        string content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error: {response.StatusCode}, {content}");
+        }
+
+        ICollection<Post> posts = JsonSerializer.Deserialize<ICollection<Post>>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        return posts;
     }
 
     public async Task<Post> AddAsync(Post post)
@@ -75,18 +86,48 @@ public class PostClient : IPostService
         return addedPost;
     }
 
-    public Task<Post> DeleteAsync(int id)
+    public async Task<Post> DeleteAsync(int id)
     {
         throw new NotImplementedException();
+        // HttpClient client = new HttpClient();
+        // string postIdAsJson = JsonSerializer.Serialize(id);
+        // // StringContent content = new StringContent(postIdAsJson, Encoding.UTF8, "application/json");
+        //
+        // HttpResponseMessage response = await client.DeleteAsync(postIdAsJson);
+        // string responseContent = await response.Content.ReadAsStringAsync();
+        //
+        // if (!response.IsSuccessStatusCode)
+        // {
+        //     throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        // }
+        //
+        // Post deletedPost = JsonSerializer.Deserialize<Post>(responseContent, new JsonSerializerOptions
+        // {
+        //     PropertyNameCaseInsensitive = true
+        // })!;
+        //
+        // return deletedPost;
     }
 
-    public Task<Post> UpdateAsync(Post post)
+    public async Task<Post> UpdateAsync(Post post)
     {
-        throw new NotImplementedException();
-    }
+        HttpClient client = new HttpClient();
+        string postAsJson = JsonSerializer.Serialize(post);
+        StringContent content = new StringContent(postAsJson, Encoding.UTF8, "application/json");
+        
+        HttpResponseMessage response = await client.PutAsync(Uri, content);
+        string responseContent = await response.Content.ReadAsStringAsync();
 
-    public void AddComment(Post post, Comment comment)
-    {
-        throw new NotImplementedException();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        }
+
+        Post editedPost = JsonSerializer.Deserialize<Post>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+
+        return editedPost;
     }
 }

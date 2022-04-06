@@ -22,12 +22,13 @@ public class PostJsonDao : IPostDao
 
     public async Task<Post> GetById(int id)
     {
-        return _jsonContext.Forum.Posts.First(p => p.Id == id);
+        Forum f = _jsonContext.Forum;
+        return f.Posts.First(p => p.Id == id);
     }
 
-    public async Task<Post> GetByAuthor(int authorId) 
+    public async Task<ICollection<Post>> GetPostsByAuthorId(int authorId) 
     { 
-        return _jsonContext.Forum.Posts.First(p => p.Author!.Id==authorId); 
+        return _jsonContext.Forum.Posts.Where(p => p.Author.Id==authorId).ToList(); 
     }
 
     public async Task<Post> AddAsync(Post post)

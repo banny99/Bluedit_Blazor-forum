@@ -18,7 +18,7 @@ public class Comment
         Text = "";
     }
     
-    public Comment(User writtenBy, Post post, string text)
+    public Comment(User writtenBy, Post? post, string text)
     {
         if (writtenBy==null)
         {

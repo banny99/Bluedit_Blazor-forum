@@ -6,6 +6,7 @@
 @inject IPostService _postService
 @inject ICommentService _commentService
 @inject IAuthService _authService
+@inject NavigationManager _navMgr
 
 
 <PageTitle>Post</PageTitle>
@@ -109,10 +110,9 @@
         {
             _errorLabel = e.Message;
         }
-        
     }
 
-    private void Comment()
+    private async void Comment()
     {
         if ( string.IsNullOrEmpty(_commentTxt))
         {
@@ -121,8 +121,7 @@
         else
         {
             _comment = new Comment(_authService.GetLoggedUser()!, _shownPost, _commentTxt);
-            _commentService.AddComment(_comment);
-            // _postService.AddComment(_shownPost!, _comment);
+            await _commentService.AddComment(_comment);
         }
         
     }

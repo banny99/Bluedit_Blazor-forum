@@ -44,20 +44,20 @@ public class PostController : ControllerBase
         }
     }
     
-    // [HttpGet]
-    // [Route("{authorId:int}")]
-    // public async Task<ActionResult<Post>> GetPostByAuthor([FromRoute] int authorId)
-    // {
-    //     try
-    //     {
-    //         var post = await _postApiService.GetByAuthor(authorId);
-    //         return Ok(post);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return StatusCode(500, e.Message);
-    //     }
-    // }
+    [HttpGet]
+    [Route("authors/{authorId:int}")]
+    public async Task<ActionResult<ICollection<Post>>> GetPostsByAuthor([FromRoute] int authorId)
+    {
+        try
+        {
+            var post = await _postService.GetPostsByAuthorId(authorId);
+            return Ok(post);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
     
     
     [HttpDelete]
@@ -82,6 +82,20 @@ public class PostController : ControllerBase
         {
             var createdPost = await _postService.AddAsync(post);
             return Ok(createdPost);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpPut]
+    public async Task<ActionResult<Post>> EditPost([FromBody] Post post)
+    {
+        try
+        {
+            var editedPost = await _postService.UpdateAsync(post);
+            return Ok(editedPost);
         }
         catch (Exception e)
         {

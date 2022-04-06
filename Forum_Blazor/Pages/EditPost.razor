@@ -1,8 +1,8 @@
-﻿@page "/CreatePost"
-@using Microsoft.AspNetCore.Components
-@using Entities.Models
-@using Authentication
+﻿@page "/EditPost/{postId:int}"
 @using Contracts.Services
+@using Entities.Models
+@using Forum_Blazor.Authentication
+@using Microsoft.AspNetCore.Components
 @using UIElements
 
 @inject IPostService _postService
@@ -10,9 +10,9 @@
 @inject NavigationManager _navMgr
 
 <div class="box">
-    <h3>Create Post</h3>
+    <h3>Edit Post #@_editedPost.Id</h3>
     
-    <EditForm Model="@_newPost" OnValidSubmit="@CreateNewPost">
+    <EditForm Model="@_editedPost" OnValidSubmit="@Save">
         <DataAnnotationsValidator/>
         <ValidationSummary/>
         @if(!string.IsNullOrEmpty(_errorLabel))
@@ -25,17 +25,17 @@
                 <label>Header:</label>
             </span>
             <span>
-                <InputText @bind-Value="_newPost.Header"/>
+                <InputText @bind-Value="_editedPost.Header"/>
             </span>
         </div>
         <div class="form-group field">
             <span>
-                <InputTextArea style="width: 90%" rows="5" @bind-Value="_newPost.Body"/>
+                <InputTextArea style="width: 90%" rows="5" @bind-Value="_editedPost.Body"/>
             </span>
         </div>
         
         <p class="actions">
-            <button type="submit" class="btn btn-primary btn-rounded">create</button>
+            <button type="submit" class="btn btn-primary btn-rounded">edit</button>
         </p>
     </EditForm>
     
@@ -49,18 +49,31 @@
             <button @onclick="Cancel" class="btn btn-warning btn-rounded">cancel</button>
         </Modal>
     }
-    
-    
 </div>
 
 @code {
-    
-    private Post _newPost = new Post();
+    [Parameter]
+    public int postId { get; set; }
+
+    private Post _editedPost = new Post();
     private string _errorLabel = String.Empty;
     
     private bool _showModal;
     
-    private void CreateNewPost()
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _editedPost = await _postService.GetById(postId);
+        }
+        catch (Exception e)
+        {
+            _errorLabel = e.Message;
+        }
+        
+    }
+    
+    private void Save()
     {
         _errorLabel = "";
         try
@@ -76,9 +89,10 @@
 
     private async void Submit()
     {
-        _newPost.Author = _authService.GetLoggedUser();
-        await _postService.AddAsync(_newPost);
-        _newPost = new Post();
+        _editedPost.Author = _authService.GetLoggedUser();
+        await _postService.UpdateAsync(_editedPost);
+        
+        _editedPost = new Post();
         _showModal = false;
         _navMgr.NavigateTo("/Posts");
     }
@@ -90,7 +104,7 @@
 
     private void Cancel()
     {
-        _newPost = new Post();
+        _editedPost = new Post();
         _showModal = false;
         _navMgr.NavigateTo("/Posts");
     }
