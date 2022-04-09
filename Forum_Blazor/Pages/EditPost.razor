@@ -12,7 +12,7 @@
 <div class="box">
     <h3>Edit Post #@_editedPost.Id</h3>
     
-    <EditForm Model="@_editedPost" OnValidSubmit="@Save">
+    <EditForm Model="@_editedPost" OnValidSubmit="@EditSelectedPost">
         <DataAnnotationsValidator/>
         <ValidationSummary/>
         @if(!string.IsNullOrEmpty(_errorLabel))
@@ -53,7 +53,7 @@
 
 @code {
     [Parameter]
-    public int postId { get; set; }
+    public int PostId { get; set; }
 
     private Post _editedPost = new Post();
     private string _errorLabel = String.Empty;
@@ -64,7 +64,7 @@
     {
         try
         {
-            _editedPost = await _postService.GetById(postId);
+            _editedPost = await _postService.GetById(PostId);
         }
         catch (Exception e)
         {
@@ -73,7 +73,7 @@
         
     }
     
-    private void Save()
+    private void EditSelectedPost()
     {
         _errorLabel = "";
         try

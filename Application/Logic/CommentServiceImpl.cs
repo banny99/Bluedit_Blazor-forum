@@ -37,4 +37,19 @@ public class CommentServiceImpl : ICommentService
     {
         return _commentDao.AddComment(comment);
     }
+
+    public Task<Comment> DeleteCommentById(int commentId)
+    {
+        return _commentDao.DeleteCommentById(commentId);
+    }
+
+    public Task<ICollection<Comment>> DeleteCommentsByAuthorId(int authorId)
+    {
+        return _commentDao.DeleteCommentsByAuthorId(authorId);
+    }
+
+    public Task<ICollection<Comment>> DeleteCommentsByPostId(int postId)
+    {
+        return _commentDao.DeleteCommentsByPostId(postId);
+    }
 }

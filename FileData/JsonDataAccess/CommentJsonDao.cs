@@ -22,7 +22,7 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<Comment> GetCommentById(int commentId)
     {
-        Comment c = _jsonContext.Forum.Comments.First(c => commentId == c.Id);
+        Comment c = _jsonContext.Forum.Comments.First(c => commentId == c.CommentId);
         return c;
     }
 
@@ -40,12 +40,42 @@ public class CommentJsonDao : ICommentDao
     {
         int largestId = -1;
         if (_jsonContext.Forum.Comments.Any()) {
-            largestId = _jsonContext.Forum.Comments.Max(p => p.Id);
+            largestId = _jsonContext.Forum.Comments.Max(p => p.CommentId);
         }
         
-        comment.Id = ++largestId;
+        comment.CommentId = ++largestId;
         _jsonContext.Forum.Comments.Add(comment);
         await _jsonContext.SaveChangesAsync();
         return comment;
+    }
+
+    public async Task<Comment> DeleteCommentById(int commentId)
+    {
+        Comment deletedComment = _jsonContext.Forum.Comments.First(c => c.CommentId == commentId);
+        _jsonContext.Forum.Comments.Remove(deletedComment);
+        await _jsonContext.SaveChangesAsync();
+        return deletedComment;
+    }
+
+    public async Task<ICollection<Comment>> DeleteCommentsByAuthorId(int authorId)
+    {
+        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.AuthorId == authorId).ToList();
+        foreach (var comment in deletedComments)
+        {
+            _jsonContext.Forum.Comments.Remove(comment);
+        }
+        await _jsonContext.SaveChangesAsync();
+        return deletedComments;
+    }
+
+    public async Task<ICollection<Comment>> DeleteCommentsByPostId(int postId)
+    {
+        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
+        foreach (var comment in deletedComments)
+        {
+            _jsonContext.Forum.Comments.Remove(comment);
+        }
+        await _jsonContext.SaveChangesAsync();
+        return deletedComments;
     }
 }

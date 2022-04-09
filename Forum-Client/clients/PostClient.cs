@@ -88,25 +88,22 @@ public class PostClient : IPostService
 
     public async Task<Post> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
-        // HttpClient client = new HttpClient();
-        // string postIdAsJson = JsonSerializer.Serialize(id);
-        // // StringContent content = new StringContent(postIdAsJson, Encoding.UTF8, "application/json");
-        //
-        // HttpResponseMessage response = await client.DeleteAsync(postIdAsJson);
-        // string responseContent = await response.Content.ReadAsStringAsync();
-        //
-        // if (!response.IsSuccessStatusCode)
-        // {
-        //     throw new Exception($"Error:{response.StatusCode}, {responseContent}");
-        // }
-        //
-        // Post deletedPost = JsonSerializer.Deserialize<Post>(responseContent, new JsonSerializerOptions
-        // {
-        //     PropertyNameCaseInsensitive = true
-        // })!;
-        //
-        // return deletedPost;
+        HttpClient client = new HttpClient();
+        
+        HttpResponseMessage response = await client.DeleteAsync(Uri +"/"+ id);
+        string responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        }
+        
+        Post deletedPost = JsonSerializer.Deserialize<Post>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return deletedPost;
     }
 
     public async Task<Post> UpdateAsync(Post post)
@@ -130,4 +127,5 @@ public class PostClient : IPostService
 
         return editedPost;
     }
+    
 }

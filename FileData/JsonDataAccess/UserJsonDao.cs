@@ -4,11 +4,11 @@ using FileData.JsonDataAccess;
 
 namespace JsonDataAccess.Context;
 
-public class UserJsonDAO : IUserDao
+public class UserJsonDao : IUserDao
 {
     
     private JsonContext _jsonContext;
-    public UserJsonDAO(JsonContext jsonContext)
+    public UserJsonDao(JsonContext jsonContext)
     {
         _jsonContext = jsonContext;
     }
@@ -28,16 +28,43 @@ public class UserJsonDAO : IUserDao
         return _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
     }
 
-    public async Task<User?> AddAsync(User? u)
+    public async Task<User> AddAsync(User u)
     {
+        int largestId = -1;
+        if (_jsonContext.Forum.Posts.Any())
+        {
+            largestId = _jsonContext.Forum.Users.Max(p => p.Id);
+        }
+        
+        int nextId = largestId + 1;
+        u.Id = nextId;
         _jsonContext.Forum.Users.Add(u);
         await _jsonContext.SaveChangesAsync();
         return u;
     }
 
-    public async Task<User?> DeleteAsync(string username)
+    public async Task<User?> DeleteAsync(int userId)
     {
-        User? userToRemove = _jsonContext.Forum.Users.First(u => u.UserName.Equals(username));
+        User userToRemove = _jsonContext.Forum.Users.First(u => u.Id==userId);
+        //delete posts of deleted user
+        ICollection<Post> posts = _jsonContext.Forum.Posts.Where(p => p.Author.Id == userId).ToList();
+        foreach (var post in posts)
+        {
+            //delete comments of each deleted post;
+            ICollection<Comment> postsComments = _jsonContext.Forum.Comments.Where(c => c.PostId == post.Id).ToList();
+            foreach (var postsComment in postsComments)
+            {
+                _jsonContext.Forum.Comments.Remove(postsComment);
+            }
+            _jsonContext.Forum.Posts.Remove(post);
+        }
+        //delete comments of deleted user
+        ICollection<Comment> usersComments = _jsonContext.Forum.Comments.Where(c => c.AuthorId == userId).ToList();
+        foreach (var usersComment in usersComments)
+        {
+            _jsonContext.Forum.Comments.Remove(usersComment);
+        }
+
         _jsonContext.Forum.Users.Remove(userToRemove);
         await _jsonContext.SaveChangesAsync();
         return userToRemove;

@@ -17,11 +17,6 @@ public class User
 
     public User() { }
 
-    public User(string userName)
-    {
-        UserName = userName;
-    }
-
 
     [Required]
     public int Id { get; set; }

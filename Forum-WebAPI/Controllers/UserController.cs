@@ -71,4 +71,19 @@ public class UserController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpDelete]
+    [Route("{userId:int}")]
+    public async Task<ActionResult<User>> DeleteById([FromRoute] int userId)
+    {
+        try
+        {
+            var deletedUser = await _userService.DeleteAsync(userId);
+            return Ok(deletedUser);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

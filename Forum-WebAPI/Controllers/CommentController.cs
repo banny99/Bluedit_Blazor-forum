@@ -87,4 +87,49 @@ public class CommentController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
+    [HttpDelete]
+    [Route("{commentId:int}")]
+    public async Task<ActionResult<Comment>> DeleteCommentById([FromRoute]int commentId)
+    {
+        try
+        {
+            var deletedPost = await _commentService.DeleteCommentById(commentId);
+            return Ok(deletedPost);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpDelete]
+    [Route("authors/{authorId:int}")]
+    public async Task<ActionResult<Comment>> DeleteCommentsByAuthorId([FromRoute]int authorId)
+    {
+        try
+        {
+            var deletedPosts = await _commentService.DeleteCommentsByAuthorId(authorId);
+            return Ok(deletedPosts);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpDelete]
+    [Route("posts/{postId:int}")]
+    public async Task<ActionResult<Comment>> DeleteCommentsByPostId([FromRoute]int postId)
+    {
+        try
+        {
+            var deletedPosts = await _commentService.DeleteCommentsByPostId(postId);
+            return Ok(deletedPosts);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
 }

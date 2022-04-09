@@ -1,9 +1,9 @@
 {
   "Users": [
     {
-      "Id": 0,
-      "UserName": "benjamin",
-      "Password": "pasS1",
+      "Id": 1,
+      "UserName": "monca",
+      "Password": "123aA",
       "Role": "none",
       "SecurityLevel": 0,
       "BirthYear": 0
@@ -11,66 +11,26 @@
   ],
   "Posts": [
     {
-      "Id": 0,
-      "Author": {
-        "Id": 0,
-        "UserName": "benjamin",
-        "Password": "pasS1",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "qwe -updated2",
-      "Body": "fasd xcvs vasd asd f\nasdf asdf asvcxz\nasdf asdfg asdfasd"
-    },
-    {
       "Id": 1,
       "Author": {
-        "Id": 0,
-        "UserName": "benjamin",
-        "Password": "pasS1",
+        "Id": 1,
+        "UserName": "monca",
+        "Password": "123aA",
         "Role": "none",
         "SecurityLevel": 0,
         "BirthYear": 0
       },
-      "Header": "cbnvncv",
-      "Body": "dgs fg sdfgdfs gfsd gsdf gdsf "
-    },
-    {
-      "Id": 2,
-      "Author": {
-        "Id": 0,
-        "UserName": "benjamin",
-        "Password": "pasS1",
-        "Role": "none",
-        "SecurityLevel": 0,
-        "BirthYear": 0
-      },
-      "Header": "srt",
-      "Body": "wrte  fdsgh dfsgddd"
+      "Header": "mmm",
+      "Body": "asdasd"
     }
   ],
   "Comments": [
     {
-      "Text": "asdlk ",
-      "Id": 0,
-      "PostId": 0,
-      "AuthorId": 0,
-      "Author": "benjamin"
-    },
-    {
-      "Text": "asdlk ",
-      "Id": 1,
+      "Text": "monca",
+      "CommentId": 2,
       "PostId": 1,
-      "AuthorId": -1,
-      "Author": "anonym"
-    },
-    {
-      "Text": "fff",
-      "Id": 2,
-      "PostId": 0,
-      "AuthorId": -1,
-      "Author": "anonym"
+      "AuthorId": 1,
+      "Author": "monca"
     }
   ]
 }

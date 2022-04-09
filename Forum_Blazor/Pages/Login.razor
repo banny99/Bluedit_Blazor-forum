@@ -6,6 +6,7 @@
 
 @inject IAuthService _authService
 @inject IPostService _postService
+@inject IUserService _userService
 @inject ICommentService _commentService
 @inject NavigationManager _navMgr
 
@@ -50,9 +51,13 @@
     
     <Authorized>
         <h3>Hello, @context.User.Identity!.Name</h3>
+        <button class="btn btn-danger btn-rounded" @onclick="RemoveAccount">+ delete account</button>
+        
         <br/>
+        <br/>
+        
         <h5>Here you can see your stats.</h5>
-
+        <br/>
         <button class="btn btn-primary btn-rounded" @onclick="CreatePost">+ create post</button>
 
         @if (_yourPosts == null)
@@ -112,11 +117,11 @@
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">post #@item.PostId [@item.Id]</h5>
+                                <h5 class="card-title">post #@item.PostId [@item.CommentId]</h5>
                                 <p class="card-text">@item.Text</p>
                                 <a href="#" class="btn btn-primary" @onclick="@(() => ViewPost(item.PostId))">view</a>
-                                <a href="#" class="btn btn-warning" @onclick="@(() => EditComment(item.Id))">edit</a>
-                                <a href="#" class="btn btn-danger" @onclick="@(() => RemoveComment(item.Id))">delete</a>
+                                <a href="#" class="btn btn-warning" @onclick="@(() => EditComment(item.CommentId))">edit</a>
+                                <a href="#" class="btn btn-danger" @onclick="@(() => RemoveComment(item.CommentId))">delete</a>
                             </div>
                         </div>
                     </div>
@@ -124,13 +129,30 @@
             </div>
         }
         
-        @if (_showModal)
+        @if (_showModalPost)
         {
             <Modal>
                 <p>Do you really wish to delete this post?</p>
-                <button @onclick="Delete" class="btn btn-danger btn-rounded">delete</button>
+                <button @onclick="DeletePost" class="btn btn-danger btn-rounded">delete</button>
                 <button @onclick="Cancel" class="btn btn-warning btn-rounded">cancel</button>
             </Modal>
+        }
+        @if (_showModalComment)
+        {
+            <Modal>
+                <p>Do you really wish to delete this post?</p>
+                <button @onclick="DeleteComment" class="btn btn-danger btn-rounded">delete</button>
+                <button @onclick="Cancel" class="btn btn-warning btn-rounded">cancel</button>
+            </Modal>
+        }
+        @if (_showModalAccount)
+        {
+            <Modal>
+                <p>Do you really wish to delete your Account?</p>
+                <button @onclick="DeleteAccount" class="btn btn-danger btn-rounded">delete</button>
+                <button @onclick="Cancel" class="btn btn-warning btn-rounded">cancel</button>
+            </Modal>
+            
         }
     </Authorized>
     
@@ -147,7 +169,10 @@
     private string _password;
     private string _errorLabel;
     
-    private bool _showModal = false;
+    private bool _showModalPost;
+    private bool _showModalComment;
+    private bool _showModalAccount;
+    
     private int _selectedId;
     
 
@@ -185,48 +210,91 @@
     }
 
     
+    
+    //------Post:
+    private void CreatePost()
+    {
+        _navMgr.NavigateTo("/CreatePost");
+    }
+
     private void EditPost(int itemId)
     {
         _navMgr.NavigateTo($"EditPost/{itemId}");
     }
     
-    private void RemovePost(int itemId)
+    private async Task RemovePost(int itemId)
     {
         _selectedId = itemId;
-        // _showModal = true;
-        _postService.DeleteAsync(itemId);
-    }
-    private void Delete()
-    {
-        _postService.DeleteAsync(_selectedId);
-        _showModal = false;
+
+        await DeletePost();
+        
+        _errorLabel = "";
+        // try
+        // {
+        //     _showModalPost = true;
+        // }
+        // catch (Exception e)
+        // {
+        //     _errorLabel = e.Message;
+        // }
     }
 
+
+    //------Comment:
+    private void EditComment(int itemId)
+    {
+        Console.WriteLine($"Comment-id to edit {itemId}");
+        // _navMgr.NavigateTo($"EditComment/{itemId}");
+    }
+    
+    private async Task RemoveComment(int itemId)
+    {
+        _selectedId = itemId;
+
+        await DeleteComment();
+
+        // _showModalComment = true;
+    }
+    
+    
+    //------account
+    private async Task RemoveAccount()
+    {
+        await DeleteAccount();
+    // _showModalAccount = true;
+    }
+    
+    
+    //---modals
     private void ViewPost(int itemId)
     {
         _navMgr.NavigateTo($"posts/{itemId}");
     }
-
-    private void EditComment(int itemId)
+    
+    private async Task DeletePost()
     {
-        _showModal = true;
-        Console.WriteLine($"Comment-id to edit {itemId}");
+        await _postService.DeleteAsync(_selectedId);
+        _showModalPost = false;
     }
-
-    private void RemoveComment(int itemId)
+    private async Task DeleteComment()
     {
-        Console.WriteLine($"Comment-id to remove {itemId}");
+        await _commentService.DeleteCommentById(_selectedId);
+        _showModalComment = false;
     }
-
+    private async Task DeleteAccount()
+    {
+        await _userService.DeleteAsync(_authService.GetLoggedUser()!.Id);
+        await _authService.LogoutAsync();
+        _navMgr.NavigateTo("/");
+        _showModalAccount = false;
+    }
+    
     private void Cancel()
     {
         _selectedId = -1;
-        _showModal = false;
-    }
-
-    private void CreatePost()
-    {
-        _navMgr.NavigateTo("/CreatePost");
+        _showModalPost = false;
+        _showModalComment = false;
+        _showModalAccount = false;
     }
 
 }

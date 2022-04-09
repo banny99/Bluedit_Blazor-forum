@@ -46,10 +46,19 @@ public class PostJsonDao : IPostDao
         return post;
     }
 
-    public async Task<Post> DeleteAsync(int id)
+    public async Task<Post> DeleteAsync(int postId)
     {
-        Post toDelete = _jsonContext.Forum.Posts.First(p => p.Id == id);
+        Post toDelete = _jsonContext.Forum.Posts.First(p => p.Id == postId);
+        
+        //+ delete all comments that belonged to that post
+        ICollection<Comment> comments = _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
+        foreach (var comment in comments)
+        {
+            _jsonContext.Forum.Comments.Remove(comment);
+        }
+        //remove post
         _jsonContext.Forum.Posts.Remove(toDelete);
+        //save
         await _jsonContext.SaveChangesAsync();
         return toDelete;
     }

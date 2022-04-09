@@ -57,9 +57,9 @@ public class UserServiceImpl : IUserService
         throw new Exception($"User with username: {user.UserName} already exists!!");
     }
 
-    public Task<User?> DeleteAsync(string username)
+    public Task<User?> DeleteAsync(int userId)
     {
-        return _userDao.DeleteAsync(username);
+        return _userDao.DeleteAsync(userId);
     }
 
     public Task<User?> UpdateAsync(User user)

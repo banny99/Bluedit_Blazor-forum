@@ -85,9 +85,27 @@ public class UserClient : IUserService
         return returnedUser;
     }
 
-    public Task<User?> DeleteAsync(string username)
+    public async Task<User?> DeleteAsync(int userId)
     {
-        throw new NotImplementedException();
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = await client.DeleteAsync(Uri +"/"+ userId);
+        string responseContent = await response.Content.ReadAsStringAsync();
+        
+        //+ delete all posts that belonged to that user
+        await client.DeleteAsync("https://localhost:7058/posts/authors/" +userId);
+        
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        }
+        
+        User deletedUser = JsonSerializer.Deserialize<User>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return deletedUser;
     }
 
     public Task<User?> UpdateAsync(User user)

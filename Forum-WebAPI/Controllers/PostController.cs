@@ -62,11 +62,11 @@ public class PostController : ControllerBase
     
     [HttpDelete]
     [Route("{postId:int}")]
-    public async Task<ActionResult<Post>> DeletePostById([FromRoute] int id)
+    public async Task<ActionResult<Post>> DeletePostById([FromRoute] int postId)
     {
         try
         {
-            var deletedPost = await _postService.DeleteAsync(id);
+            var deletedPost = await _postService.DeleteAsync(postId);
             return Ok(deletedPost);
         }
         catch (Exception e)
@@ -74,6 +74,7 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+    
     
     [HttpPost]
     public async Task<ActionResult<Post>> CreateNewPost([FromBody] Post post)

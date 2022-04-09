@@ -104,4 +104,66 @@ public class CommentClient : ICommentService
 
         return addedComment;
     }
+
+    public async Task<Comment> DeleteCommentById(int commentId)
+    {
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = await client.DeleteAsync(Uri +"/"+ commentId);
+        string responseContent = await response.Content.ReadAsStringAsync();
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        }
+        
+        Comment deletedComment = JsonSerializer.Deserialize<Comment>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return deletedComment;
+    }
+
+    public async Task<ICollection<Comment>> DeleteCommentsByAuthorId(int authorId)
+    {
+        HttpClient client = new HttpClient();
+        
+        HttpResponseMessage response = await client.DeleteAsync(Uri +"/authors/"+ authorId);
+        string responseContent = await response.Content.ReadAsStringAsync();
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        }
+        
+        ICollection<Comment> deletedComments = JsonSerializer.Deserialize<ICollection<Comment>>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return deletedComments;
+    }
+
+    public async Task<ICollection<Comment>> DeleteCommentsByPostId(int postId)
+    {
+        HttpClient client = new HttpClient();
+        
+        HttpResponseMessage response = await client.DeleteAsync(Uri +"/posts/"+ postId);
+        string responseContent = await response.Content.ReadAsStringAsync();
+
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error:{response.StatusCode}, {responseContent}");
+        }
+        
+        ICollection<Comment> deletedComments = JsonSerializer.Deserialize<ICollection<Comment>>(responseContent, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        })!;
+        
+        return deletedComments;
+    }
 }
