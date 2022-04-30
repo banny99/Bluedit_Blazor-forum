@@ -1,8 +1,15 @@
+using Application.Interfaces;
 using Application.Logic;
 using Contracts.Services;
+using EfcData.EfcDataAccess;
 using Entities.Interfaces;
 using FileData.JsonDataAccess;
 using JsonDataAccess.Context;
+
+using (ForumDbContext ctx = new())
+{
+    ctx.Seed();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,10 +25,18 @@ builder.Services.AddScoped<IPostService, PostServiceImpl>();
 builder.Services.AddScoped<IUserService, UserServiceImpl>();
 builder.Services.AddScoped<ICommentService, CommentServiceImpl>();
 
-builder.Services.AddScoped<JsonContext>();
-builder.Services.AddScoped<IPostDao, PostJsonDao>();
-builder.Services.AddScoped<IUserDao, UserJsonDao>();
-builder.Services.AddScoped<ICommentDao, CommentJsonDao>();
+//using-file 
+// builder.Services.AddScoped<JsonContext>();
+// builder.Services.AddScoped<IPostDao, PostJsonDao>();
+// builder.Services.AddScoped<IUserDao, UserJsonDao>();
+// builder.Services.AddScoped<ICommentDao, CommentJsonDao>();
+//
+//using-db
+builder.Services.AddDbContext<ForumDbContext>();
+builder.Services.AddScoped<IPostDao, PostSqliteDao>();
+builder.Services.AddScoped<IUserDao, UserSqliteDao>();
+builder.Services.AddScoped<ICommentDao, CommentSqliteDao>();
+
 
 var app = builder.Build();
 

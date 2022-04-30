@@ -1,4 +1,5 @@
-﻿using Contracts.Services;
+﻿using Application.Interfaces;
+using Contracts.Services;
 using Entities.Interfaces;
 using Entities.Models;
 

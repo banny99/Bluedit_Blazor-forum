@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forum-WebAPI", "Forum-WebAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forum-Client", "Forum-Client\Forum-Client.csproj", "{0F98E0A3-2149-4E4F-92E4-1AAF4ED4F954}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfcData", "EfcData\EfcData.csproj", "{2872D289-455E-4EB2-AFAC-1F31740DB8C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{0F98E0A3-2149-4E4F-92E4-1AAF4ED4F954}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F98E0A3-2149-4E4F-92E4-1AAF4ED4F954}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F98E0A3-2149-4E4F-92E4-1AAF4ED4F954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2872D289-455E-4EB2-AFAC-1F31740DB8C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2872D289-455E-4EB2-AFAC-1F31740DB8C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2872D289-455E-4EB2-AFAC-1F31740DB8C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2872D289-455E-4EB2-AFAC-1F31740DB8C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
