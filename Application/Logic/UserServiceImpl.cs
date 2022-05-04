@@ -13,9 +13,9 @@ public class UserServiceImpl : IUserService
         _userDao = userDao;
     }
 
-    public Task<ICollection<User?>> GetAsync()
+    public async Task<ICollection<User?>> GetAsync()
     {
-        return _userDao.GetAsync();
+        return await _userDao.GetAsync();
     }
 
     public Task<User> GetById(int id)
@@ -44,17 +44,18 @@ public class UserServiceImpl : IUserService
         if (!user.Password.Any(char.IsLower))
             throw new Exception("Password must contain at least one lower-cased letter!");
 
-        try
-        {
-            //if found ->no exception thrown-> user already exists
-            User? u = await GetByUsername(user.UserName);
-        }
-        catch (Exception e)
-        {
-            return await _userDao.AddAsync(user);
-        }
-        
-        throw new Exception($"User with username: {user.UserName} already exists!!");
+        // try
+        // {
+        //     //if found ->no exception thrown-> user already exists
+        //     User? u = await GetByUsername(user.UserName);
+        // }
+        // catch (Exception e)
+        // {
+        //     return await _userDao.AddAsync(user);
+        // }
+        // throw new Exception($"User with username: {user.UserName} already exists!!");
+
+        return await _userDao.AddAsync(user);
     }
 
     public Task<User?> DeleteAsync(int userId)

@@ -52,7 +52,7 @@ public class PostJsonDao : IPostDao
         Post toDelete = _jsonContext.Forum.Posts.First(p => p.Id == postId);
         
         //+ delete all comments that belonged to that post
-        ICollection<Comment> comments = _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
+        ICollection<Comment> comments = _jsonContext.Forum.Comments.Where(c => c.Post.Id == postId).ToList();
         foreach (var comment in comments)
         {
             _jsonContext.Forum.Comments.Remove(comment);

@@ -28,12 +28,12 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<ICollection<Comment>> GetCommentsByPostId(int postId)
     {
-        return _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
+        return _jsonContext.Forum.Comments.Where(c => c.Post.Id == postId).ToList();
     }
 
     public async Task<ICollection<Comment>> GetCommentsByAuthorId(int authorId)
     {
-        return _jsonContext.Forum.Comments.Where(c => c.AuthorId == authorId).ToList();
+        return _jsonContext.Forum.Comments.Where(c => c.WrittenBy.Id == authorId).ToList();
     }
 
     public async Task<Comment> AddComment(Comment comment)
@@ -59,7 +59,7 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<ICollection<Comment>> DeleteCommentsByAuthorId(int authorId)
     {
-        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.AuthorId == authorId).ToList();
+        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.WrittenBy!.Id == authorId).ToList();
         foreach (var comment in deletedComments)
         {
             _jsonContext.Forum.Comments.Remove(comment);
@@ -70,7 +70,7 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<ICollection<Comment>> DeleteCommentsByPostId(int postId)
     {
-        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
+        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.Post.Id == postId).ToList();
         foreach (var comment in deletedComments)
         {
             _jsonContext.Forum.Comments.Remove(comment);

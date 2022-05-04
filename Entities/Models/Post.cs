@@ -13,7 +13,8 @@ public class Post
     
     [Required (ErrorMessage = "Body cannot be empty!")]
     public string Body { get; set; }
-    
+    public List<Comment> Comments { get; set; }
+
 
 
     public Post() { }
@@ -23,15 +24,16 @@ public class Post
         Author = author;
         Header = header;
         Body = body;
+        Comments = new List<Comment>();
     }
 
 
     public void Update(Post toPost)
     {
-        this.Id = toPost.Id;
-        this.Author = toPost.Author;
-        this.Header = toPost.Header;
-        this.Body = toPost.Body;
+        Id = toPost.Id;
+        Author = toPost.Author;
+        Header = toPost.Header;
+        Body = toPost.Body;
     }
     
 }

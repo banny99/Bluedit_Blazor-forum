@@ -32,14 +32,14 @@
             </span>
         </div>
         <br/>
-        <button type="submit" class="btn btn-primary btn-rounded" @onclick="RegisterUser">register</button>
+        <button type="submit" class="btn btn-primary btn-rounded">register</button>
     </EditForm>
 
 </div>
 
 
 @code {
-    private User? _newUser = new User();
+    private User _newUser = new User();
     private string _errorLabel = String.Empty;
     
     private async Task RegisterUser()
@@ -48,10 +48,10 @@
         try
         {
             _newUser.Role = "none";
-            
             await _userService.AddAsync(_newUser);
-            _navMgr.NavigateTo("/Login");
             _newUser = new User();
+            
+            _navMgr.NavigateTo("/Login");
         }
         catch (Exception e)
         {

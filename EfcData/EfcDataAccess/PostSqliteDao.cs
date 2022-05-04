@@ -15,22 +15,39 @@ public class PostSqliteDao : IPostDao
     
     public async Task<ICollection<Post>?> GetAsync()
     {
-        ICollection<Post> posts = await _context.Posts.ToListAsync();
+        ICollection<Post> posts = await _context.Posts
+            .Include(p=>p.Author)
+            .Include(p=>p.Comments)
+            .ToListAsync();
         return posts;
     }
 
     public async Task<Post?> GetById(int id)
     {
+        ICollection<Post> posts = _context.Posts.Where(
+                p => p.Id == id)
+            .Include(p=>p.Author)
+            .Include(p=>p.Comments)
+            .ToList();
+        return posts.First(p => p.Id == id);
+        
         return await _context.Posts.FindAsync(id);
     }
 
     public async Task<ICollection<Post>> GetPostsByAuthorId(int authorId)
     {
-        return _context.Posts.Where(p => p.Author.Id == authorId).ToList();
+        ICollection<Post> posts = _context.Posts.Where(
+            p => p.Author.Id == authorId)
+            .Include(p=>p.Author)
+            .Include(p=>p.Comments)
+            .ToList();
+
+        return posts;
     }
 
     public async Task<Post?> AddAsync(Post post)
     {
+        _context.Attach(post.Author);
         EntityEntry<Post> added = _context.Posts.Add(post);
         await _context.SaveChangesAsync();
         return added.Entity;

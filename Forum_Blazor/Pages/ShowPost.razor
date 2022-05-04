@@ -11,6 +11,7 @@
 
 <PageTitle>Post</PageTitle>
 
+
 <div class="box">
     
     @if (!string.IsNullOrEmpty(_errorLabel))
@@ -37,12 +38,19 @@
             @_shownPost.Body
         </p>
         
+        <AuthorizeView>
+            <NotAuthorized>
+                <p>Log in first to comment.</p>
+            </NotAuthorized>
+            <Authorized>
+                <div class="form-outline">
+                    <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="64" @bind="_commentTxt"/>
+                    <label class="form-label" for="form16">Comment ...</label>
+                    <button type="button" class="btn btn-primary btn-rounded" @onclick="Comment">submit</button>
+                </div>
+            </Authorized>
+        </AuthorizeView>
 
-        <div class="form-outline">
-            <input type="text" id="form16" class="form-control" data-mdb-showcounter="true" maxlength="64" @bind="_commentTxt"/>
-            <label class="form-label" for="form16">Comment ...</label>
-            <button type="button" class="btn btn-primary btn-rounded" @onclick="Comment">submit</button>
-        </div>
         
         <br/>
         if (_comments==null)
@@ -71,7 +79,7 @@
                     {
                         <br/>
                         <div class="card">
-                            <div class="card-header">@comment.Author</div>
+                            <div class="card-header">@comment.WrittenBy.UserName</div>
                             <div class="card-body">
                                 <blockquote class="blockquote mb-0">
                                     <p>@comment.Text</p>
@@ -120,7 +128,7 @@
         }
         else
         {
-            _comment = new Comment(_authService.GetLoggedUser()!, _shownPost, _commentTxt);
+            _comment = new Comment(0,_authService.GetLoggedUser()!, _shownPost!, _commentTxt);
             await _commentService.AddComment(_comment);
         }
         

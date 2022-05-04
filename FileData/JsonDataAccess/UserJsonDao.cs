@@ -51,7 +51,7 @@ public class UserJsonDao : IUserDao
         foreach (var post in posts)
         {
             //delete comments of each deleted post;
-            ICollection<Comment> postsComments = _jsonContext.Forum.Comments.Where(c => c.PostId == post.Id).ToList();
+            ICollection<Comment> postsComments = _jsonContext.Forum.Comments.Where(c => c.Post.Id == post.Id).ToList();
             foreach (var postsComment in postsComments)
             {
                 _jsonContext.Forum.Comments.Remove(postsComment);
@@ -59,7 +59,7 @@ public class UserJsonDao : IUserDao
             _jsonContext.Forum.Posts.Remove(post);
         }
         //delete comments of deleted user
-        ICollection<Comment> usersComments = _jsonContext.Forum.Comments.Where(c => c.AuthorId == userId).ToList();
+        ICollection<Comment> usersComments = _jsonContext.Forum.Comments.Where(c => c.WrittenBy!.Id == userId).ToList();
         foreach (var usersComment in usersComments)
         {
             _jsonContext.Forum.Comments.Remove(usersComment);

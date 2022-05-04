@@ -76,11 +76,12 @@
 
     private async void Submit()
     {
-        _newPost.Author = _authService.GetLoggedUser();
+        _newPost.Author = _authService.GetLoggedUser()!;
+        _newPost.Comments = new List<Comment>();
         await _postService.AddAsync(_newPost);
         _newPost = new Post();
         _showModal = false;
-        _navMgr.NavigateTo("/Posts");
+        _navMgr.NavigateTo("/Login");
     }
 
     private void Edit()
@@ -92,7 +93,7 @@
     {
         _newPost = new Post();
         _showModal = false;
-        _navMgr.NavigateTo("/Posts");
+        _navMgr.NavigateTo("/Login");
     }
 
 }

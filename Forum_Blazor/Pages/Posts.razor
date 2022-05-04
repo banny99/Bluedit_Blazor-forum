@@ -54,7 +54,7 @@ else if (!_postsToShow.Any())
                  <div class="card">
                      <div class="card-body">
                          <h5 class="card-title">@item.Header [@item.Id]</h5>
-                         <p class="card-text">@item.Author!.UserName</p>
+                         <p class="card-text">@item.Author.UserName</p>
                          <a href="#" class="btn btn-primary" @onclick="@(() => ShowPost(item.Id))">View post</a>
                      </div>
                  </div>

@@ -89,7 +89,7 @@
 
     private async void Submit()
     {
-        _editedPost.Author = _authService.GetLoggedUser();
+        _editedPost.Author = _authService.GetLoggedUser()!;
         await _postService.UpdateAsync(_editedPost);
         
         _editedPost = new Post();

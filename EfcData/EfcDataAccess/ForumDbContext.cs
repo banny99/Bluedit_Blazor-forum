@@ -32,12 +32,10 @@ public class ForumDbContext : DbContext
     {
         if (!Users.Any())
         {
-            User[] us =
-            {
-                new User(0,"uName","pasS123","role", 1,1234),
-                new User(0,"uName2","pasS123","role", 1,1234),
-            };
-            Users.AddRange(us);
+            User u = new User(0, "uName", "pasS123", "role", 1, 1234);
+            Users.Add(u);
+            Posts.Add(new Post(u, "header", "body,body ...vbsd"));
+
             SaveChanges();
         }
     }

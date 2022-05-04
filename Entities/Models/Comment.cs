@@ -2,36 +2,22 @@
 
 public class Comment
 {
-    // public User? WrittenBy { get; set; }
-    public string Text { get; set; }
-
     public int CommentId { get; set; }
-    public int PostId { get; set; }
-    public int AuthorId { get; set; }
-    public string Author { get; set; }
+    public User WrittenBy { get; set; }
+    public Post Post { get; set; }
+    public string Text { get; set; }
+    
 
 
     public Comment()
     {
-        AuthorId = -1;
-        PostId = -1;
-        Text = "";
     }
-    
-    public Comment(User writtenBy, Post? post, string text)
+
+    public Comment(int commentId, User writtenBy, Post post, string text)
     {
-        if (writtenBy==null)
-        {
-            AuthorId = -1;
-            Author = "anonym";
-        }
-        else
-        {
-            AuthorId = writtenBy.Id;
-            Author = writtenBy.UserName;
-        }
-        
+        CommentId = commentId;
+        WrittenBy = writtenBy;
+        Post = post;
         Text = text;
-        PostId = post.Id;
     }
 }

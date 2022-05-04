@@ -26,8 +26,8 @@ public class User
     
     [Required, MinLength(4)] 
     public string Password { get; set; }
-    
     public string Role { get;  set; }
     public int SecurityLevel { get;  set; }
     public int BirthYear { get; set; }
+
 }
