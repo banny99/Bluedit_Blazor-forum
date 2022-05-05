@@ -97,19 +97,17 @@ namespace EfcData.Migrations
 
             modelBuilder.Entity("Entities.Models.Comment", b =>
                 {
-                    b.HasOne("Entities.Models.Post", "Post")
+                    b.HasOne("Entities.Models.Post", null)
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Models.User", "WrittenBy")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("WrittenById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Post");
 
                     b.Navigation("WrittenBy");
                 });
@@ -117,7 +115,7 @@ namespace EfcData.Migrations
             modelBuilder.Entity("Entities.Models.Post", b =>
                 {
                     b.HasOne("Entities.Models.User", "Author")
-                        .WithMany("Posts")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -128,13 +126,6 @@ namespace EfcData.Migrations
             modelBuilder.Entity("Entities.Models.Post", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Entities.Models.User", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

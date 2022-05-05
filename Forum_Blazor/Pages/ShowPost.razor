@@ -128,8 +128,15 @@
         }
         else
         {
-            _comment = new Comment(0,_authService.GetLoggedUser()!, _shownPost!, _commentTxt);
+            _comment = new Comment(0,_authService.GetLoggedUser()!, _shownPost!.Id, _commentTxt);
+            _commentTxt = "";
             await _commentService.AddComment(_comment);
+
+            _comments = new List<Comment>();
+            _comments = await _commentService.GetCommentsByPostId(_shownPost.Id);
+            
+            //forcedLoad works but sets the loggedUser to null ???
+            // _navMgr.NavigateTo($"/posts/{_shownPost.Id}", forceLoad:true);
         }
         
     }

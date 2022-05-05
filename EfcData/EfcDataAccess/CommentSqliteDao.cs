@@ -17,7 +17,6 @@ public class CommentSqliteDao : ICommentDao
     {
         ICollection<Comment> comments = await _context.Comments
             .Include(c=>c.WrittenBy)
-            .Include(c=>c.Post)
             .ToListAsync();
         return comments;
     }
@@ -26,7 +25,6 @@ public class CommentSqliteDao : ICommentDao
     {
         ICollection<Comment> comments = await _context.Comments
             .Include(c=>c.WrittenBy)
-            .Include(c=>c.Post)
             .ToListAsync();
 
         return comments.First(c => c.CommentId == commentId);
@@ -34,9 +32,8 @@ public class CommentSqliteDao : ICommentDao
 
     public async Task<ICollection<Comment>> GetCommentsByPostId(int postId)
     {
-        ICollection<Comment> comments = _context.Comments.Where(c => c.Post.Id == postId)
+        ICollection<Comment> comments = _context.Comments.Where(c => c.PostId == postId)
             .Include(c=>c.WrittenBy)
-            .Include(c=>c.Post)
             .ToList();
         return comments;
     }
@@ -45,15 +42,13 @@ public class CommentSqliteDao : ICommentDao
     {
         ICollection<Comment> comments = _context.Comments.Where(c => c.WrittenBy.Id == authorId)
             .Include(c=>c.WrittenBy)
-            .Include(c=>c.Post)
             .ToList();
         return comments;
     }
 
     public async Task<Comment?> AddComment(Comment comment)
     {
-        _context.Attach(comment.Post);
-        // _context.Attach(comment.WrittenBy);
+        _context.Attach(comment.WrittenBy);
         EntityEntry<Comment> added = _context.Comments.Add(comment);
         await _context.SaveChangesAsync();
         return added.Entity;

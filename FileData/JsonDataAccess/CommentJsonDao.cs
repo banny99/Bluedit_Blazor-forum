@@ -28,7 +28,7 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<ICollection<Comment>> GetCommentsByPostId(int postId)
     {
-        return _jsonContext.Forum.Comments.Where(c => c.Post.Id == postId).ToList();
+        return _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
     }
 
     public async Task<ICollection<Comment>> GetCommentsByAuthorId(int authorId)
@@ -70,7 +70,7 @@ public class CommentJsonDao : ICommentDao
 
     public async Task<ICollection<Comment>> DeleteCommentsByPostId(int postId)
     {
-        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.Post.Id == postId).ToList();
+        ICollection<Comment> deletedComments = _jsonContext.Forum.Comments.Where(c => c.PostId == postId).ToList();
         foreach (var comment in deletedComments)
         {
             _jsonContext.Forum.Comments.Remove(comment);

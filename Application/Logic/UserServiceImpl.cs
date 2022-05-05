@@ -44,16 +44,16 @@ public class UserServiceImpl : IUserService
         if (!user.Password.Any(char.IsLower))
             throw new Exception("Password must contain at least one lower-cased letter!");
 
-        // try
-        // {
-        //     //if found ->no exception thrown-> user already exists
-        //     User? u = await GetByUsername(user.UserName);
-        // }
-        // catch (Exception e)
-        // {
-        //     return await _userDao.AddAsync(user);
-        // }
-        // throw new Exception($"User with username: {user.UserName} already exists!!");
+        try
+        {
+            //if found ->no exception thrown-> user already exists
+            User? u = await GetByUsername(user.UserName);
+        }
+        catch (Exception e)
+        {
+            return await _userDao.AddAsync(user);
+        }
+        throw new Exception($"User with username: {user.UserName} already exists!!");
 
         return await _userDao.AddAsync(user);
     }

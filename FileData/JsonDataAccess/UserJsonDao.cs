@@ -51,7 +51,7 @@ public class UserJsonDao : IUserDao
         foreach (var post in posts)
         {
             //delete comments of each deleted post;
-            ICollection<Comment> postsComments = _jsonContext.Forum.Comments.Where(c => c.Post.Id == post.Id).ToList();
+            ICollection<Comment> postsComments = _jsonContext.Forum.Comments.Where(c => c.PostId == post.Id).ToList();
             foreach (var postsComment in postsComments)
             {
                 _jsonContext.Forum.Comments.Remove(postsComment);
