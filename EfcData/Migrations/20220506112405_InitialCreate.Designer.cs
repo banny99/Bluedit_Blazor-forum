@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfcData.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20220505125451_InitialCreate")]
+    [Migration("20220506112405_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
